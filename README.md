@@ -6,7 +6,7 @@ raml-fleece turns RAML into a readable HTML file.
 Installation
 ============
 
-`npm install -g raml-fleece`
+`npm install -g janrain/raml-fleece`
 
 Usage
 =====
