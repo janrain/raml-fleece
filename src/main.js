@@ -11,15 +11,17 @@ if (args.length !== 1) {
     die('Expected one argument: input RAML file')
 }
 
-
+function template(x) {
+    return path.join(__dirname, 'templates', x)
+}
 
 var input = args[0]
 var https = true
 var config = raml2html.getDefaultConfig(
     https,
-    './templates/template.handlebars',
-    './templates/resource.handlebars',
-    './templates/item.handlebars'
+    template('template.handlebars'),
+    template('resource.handlebars'),
+    template('item.handlebars')
 )
 
 raml2html.render(
