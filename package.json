@@ -1,0 +1,10 @@
+{
+  "name": "raml-fleece",
+  "version": "0.0.1",
+  "license": "MIT",
+  "bin": "./src/main.js",
+  "repository": "janrain/raml-fleece",
+  "dependencies": {
+    "raml2html": "^1.6.0"
+  }
+}
