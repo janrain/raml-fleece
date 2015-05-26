@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 var raml2html = require('raml2html')
+var path = require('path')
 
 function die(message) {
     console.error(message)
@@ -12,16 +13,16 @@ if (args.length !== 1) {
 }
 
 function template(x) {
-    return path.join(__dirname, 'templates', x)
+    return path.join(__dirname, '..', 'templates', x + '.handlebars')
 }
 
 var input = args[0]
 var https = true
 var config = raml2html.getDefaultConfig(
     https,
-    template('template.handlebars'),
-    template('resource.handlebars'),
-    template('item.handlebars')
+    template('index'),
+    template('resource'),
+    template('item')
 )
 
 raml2html.render(
