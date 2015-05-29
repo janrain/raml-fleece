@@ -1,16 +1,12 @@
-{{!-- <div class="panel panel-default"> --}}
-    <div class="panel-heading">
-        <h4 class="panel-header">Table of Contents</h4>
-    </div>
-    {{!-- <ul class="list-group"> --}}
-    <ul class="nav nav-pills nav-stacked">
-        {{#each resources}}
-            {{#if path}}
-                {{!-- <li class="list-group-item"> --}}
-                <li>
-                    <a href="#{{basePath}}{{path}}">{{basePath}}{{path}}</a>
-                </li>
-            {{/if}}
-        {{/each}}
-    </ul>
-{{!-- </div> --}}
+<ul class="nav nav-pills nav-stacked">
+    {{#each resources}}
+        {{#if path}}
+            <li class="sidebar-item">
+                <a href="#{{basePath}}{{path}}"
+                   title="{{basePath}}{{path}}">
+                    {{basePath}}<strong>{{path}}</strong>
+                </a>
+            </li>
+        {{/if}}
+    {{/each}}
+</ul>

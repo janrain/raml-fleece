@@ -16,44 +16,76 @@
         .parent {
             color: #888;
         }
-        .badge.method {
+        .label.method {
             border-radius: 2px;
             text-transform: uppercase;
         }
         h4.method {
             text-transform: uppercase;
         }
-        .badge.method.delete { background: #a00; }
-        .badge.method.post   { background: #0aa; }
-        .badge.method.put    { background: #a0c; }
-        .badge.method.get    { background: #0a0; }
+        .label.method a {
+            color: inherit;
+        }
+        .label.method.wide {
+            display: inline-block;
+            min-width: 70px;
+            text-align: center;
+        }
+        .label.method.delete { background: #a44; }
+        .label.method.post   { background: #4aa; }
+        .label.method.put    { background: #a4c; }
+        .label.method.get    { background: #4a4; }
         body {
             position: relative;
         }
-        .top-link {
+        #side-navbar {
+            width: 350px;
             position: fixed;
+            top: 50px;
+            left: 0;
             bottom: 0;
-            right: 0;
-            margin: 10px;
+            overflow-y: scroll;
+            background: #f5f8fa;
+            border-right: 1px solid rgba(0, 0, 0, 0.10);
             padding: 10px;
-            border-radius: 2px;
-            /*background: rgba(255, 255, 255, 0.80);*/
-            font-weight: bold;
-            font-size: 32px;
-            width: 2em;
-            height: 2em;
-            text-align: center;
-            /*text-shadow: 1px 1px 1px black;*/
-            text-shadow: 0 0 3px white;
         }
-        .top-link, .top-link:hover, .top-link:focus {
-            text-decoration: none;
-            color: rgba(0, 0, 0, 0.40);
+        #side-navbar .nav-pills li {
+            margin: 0;
+        }
+        #side-navbar .nav-pills li a {
+            padding: 3px 10px;
+            font-size: 95%;
+            border: 1px solid transparent;
+        }
+        #side-navbar .nav-pills li:hover a {
+            background: #428bca;
+            color: white;
+        }
+        main {
+            margin-top: 70px;
+            margin-left: 350px;
+            padding: 0 15px;
+            max-width: 900px;
+        }
+        .anchor:before {
+            content: "";
+            display: block;
+            background: none;
+            height: 80px;
+            margin: -80px 0 0;
+        }
+        .sidebar-item a {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        pre code.hljs {
+            background: transparent;
         }
     </style>
 </head>
 <body data-spy="" data-target="#side-navbar">
-    <nav class="navbar navbar-default navbar-static-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
                 <a href="#" class="navbar-brand">
@@ -62,30 +94,25 @@
             </div>
         </div>
     </nav>
-    <div class="container">
-        <div class="row">
-            <div id="side-navbar" class="col-md-4">
-                {{> table_of_contents}}
-            </div>
-            <main class="col-md-8">
-                {{#each resources}}
-                    {{#if path}}
-                        {{> resource}}
-                    {{/if}}
-                {{/each}}
-            </main>
-        </div>
+    <div id="side-navbar">
+        {{> table_of_contents}}
     </div>
-    {{!-- <a class="top-link" href="#">&uarr;</a> --}}
+    <main>
+        {{#each resources}}
+            {{#if path}}
+                {{> resource}}
+            {{/if}}
+        {{/each}}
+    </main>
     <a class="top-link" href="#">
         <span class="glyphicon glyphicon-arrow-up"></span>
     </a>
 
     {{print_json .}}
     <script>
-        // $('pre code').each(function(i, block) {
-        //     hljs.highlightBlock(block);
-        // });
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+        });
     </script>
 </body>
 </html>

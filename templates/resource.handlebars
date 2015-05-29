@@ -1,11 +1,11 @@
 <div class="panel panel-default resource">
   <div class="panel-heading">
-    <span class="pull-right">
+{{!--     <span class="pull-right">
     {{#each methods}}
-      <span class="badge method {{method}}">{{method}}</span>
+      <span class="label method {{method}}">{{method}}</span>
     {{/each}}
-    </span>
-    <h3 class="panel-title" id="{{basePath}}{{path}}">
+    </span> --}}
+    <h3 class="panel-title anchor" id="{{basePath}}{{path}}">
       <a href="#{{basePath}}{{path}}">
         {{#if basePath}}<span class="parent">{{basePath}}</span>{{/if}}{{path}}
       </a>
@@ -14,12 +14,12 @@
   <div class="panel-body">
   <p>{{markdown description}}</p>
   {{#each methods}}
-    <h4 class="method {{upmethod}}" id="{{upper_case method}}{{../basePath}}{{../  path}}">
+    <h4 class="anchor" id="{{upper_case method}}{{../basePath}}{{../  path}}">
+      <span class="label label-default wide method {{method}}">{{method}}</span>
       <a href="#{{upper_case method}}{{../basePath}}{{../  path}}">
-        {{method}}
+        {{description}}
       </a>
     </h4>
-    <p>{{description}}</p>
     {{#if queryParameters}}
       <h5>Query Parameters</h5>
       <ul>
