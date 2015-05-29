@@ -5,6 +5,9 @@
   "bin": "./src/main.js",
   "repository": "janrain/raml-fleece",
   "dependencies": {
-    "raml2html": "^1.6.0"
+    "handlebars": "^3.0.3",
+    "lodash": "^3.9.3",
+    "marked": "^0.3.3",
+    "raml-parser": "^0.8.11"
   }
 }
