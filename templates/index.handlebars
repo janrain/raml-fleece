@@ -7,10 +7,10 @@
     <meta name="generator" content="https://github.com/janrain/raml-fleece {{config.version}}">
 
     <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/default.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/default.min.css">
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
 
     <style>
         .parent {
@@ -45,7 +45,7 @@
             left: 0;
             bottom: 0;
             overflow-y: scroll;
-            background: #f5f8fa;
+            background: #fafafa;
             border-right: 1px solid rgba(0, 0, 0, 0.10);
             padding: 10px;
         }
@@ -63,7 +63,7 @@
         }
         main {
             margin-top: 70px;
-            margin-left: 350px;
+            margin-left: 360px;
             padding: 0 15px;
             max-width: 900px;
         }
@@ -71,16 +71,41 @@
             content: "";
             display: block;
             background: none;
-            height: 80px;
-            margin: -80px 0 0;
+            height: 70px;
+            margin: -70px 0 0;
         }
         .sidebar-item a {
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        pre code.hljs {
-            background: transparent;
+        .endpoint {
+            margin-top: 50px;
+            margin-bottom: 20px;
+            color: black;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+        }
+        main h1 { font-size: 32px; }
+        main h2 { font-size: 20px; }
+        main h3 { font-size: 16px; }
+        .endpoint a {
+            color: black;
+        }
+        pre {
+            padding: 0;
+            border: 1px solid #ddd;
+        }
+        .navbar-inverse {
+            background: #428bca;
+            color: white;
+        }
+        .navbar-inverse .navbar-brand {
+            color: rgba(255, 255, 255, 0.70);
+        }
+        code {
+            background: #eee;
+            color: #000;
         }
     </style>
 </head>

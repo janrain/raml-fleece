@@ -1,48 +1,37 @@
-<div class="panel panel-default resource">
-  <div class="panel-heading">
-{{!--     <span class="pull-right">
-    {{#each methods}}
-      <span class="label method {{method}}">{{method}}</span>
+<h1 class="endpoint anchor" id="{{basePath}}{{path}}">
+  <a href="#{{basePath}}{{path}}">
+    {{#if basePath}}<span class="parent">{{basePath}}</span>{{/if}}{{path}}
+  </a>
+</h1>
+<p>{{markdown description}}</p>
+{{#each methods}}
+  <h2 class="anchor" id="{{upper_case method}}{{../basePath}}{{../  path}}">
+    <span class="label label-default wide method {{method}}">{{method}}</span>
+    <a href="#{{upper_case method}}{{../basePath}}{{../  path}}">
+      {{description}}
+    </a>
+  </h2>
+  {{#if queryParameters}}
+    <h3>Query Parameters</h3>
+    <ul>
+    {{#each queryParameters}}
+      <li>
+        <i>({{type}})</i>
+        <b><tt>{{@key}}</tt></b>
+      </li>
     {{/each}}
-    </span> --}}
-    <h3 class="panel-title anchor" id="{{basePath}}{{path}}">
-      <a href="#{{basePath}}{{path}}">
-        {{#if basePath}}<span class="parent">{{basePath}}</span>{{/if}}{{path}}
-      </a>
-    </h3>
-  </div>
-  <div class="panel-body">
-  <p>{{markdown description}}</p>
-  {{#each methods}}
-    <h4 class="anchor" id="{{upper_case method}}{{../basePath}}{{../  path}}">
-      <span class="label label-default wide method {{method}}">{{method}}</span>
-      <a href="#{{upper_case method}}{{../basePath}}{{../  path}}">
-        {{description}}
-      </a>
-    </h4>
-    {{#if queryParameters}}
-      <h5>Query Parameters</h5>
-      <ul>
-      {{#each queryParameters}}
-        <li>
-          <i>({{type}})</i>
-          <b><tt>{{@key}}</tt></b>
-        </li>
+    </ul>
+  {{/if}}
+  {{#if body}}
+    <div class="body">
+      {{#each body}}
+        <h3>Format: <tt>{{@key}}</tt></h3>
+        {{#if example}}
+        <h3>Example</h3>
+        {{!-- {{json example}} --}}
+        <pre><code>{{example}}</code></pre>
+        {{/if}}
       {{/each}}
-      </ul>
-    {{/if}}
-    {{#if body}}
-      <div class="body">
-        {{#each body}}
-          <p>Format: {{@key}}</p>
-          {{#if example}}
-          Example:
-          {{!-- {{json example}} --}}
-          <pre><code>{{example}}</code></pre>
-          {{/if}}
-        {{/each}}
-      </div>
-    {{/if}}
-  {{/each}}
-  </div>
-</div>
+    </div>
+  {{/if}}
+{{/each}}
