@@ -8,9 +8,11 @@
   <h2 class="anchor" id="{{upper_case method}}{{../basePath}}{{../  path}}">
     <span class="label label-default wide method {{method}}">{{method}}</span>
     <a href="#{{upper_case method}}{{../basePath}}{{../  path}}">
-      {{description}}
+      {{../basePath}}<strong>{{../  path}}</strong>
     </a>
   </h2>
+  <h3>Description</h3>
+  <p>{{description}}</p>
   {{#if queryParameters}}
     <h3>Query Parameters</h3>
     <ul>
@@ -22,16 +24,13 @@
     {{/each}}
     </ul>
   {{/if}}
-  {{#if body}}
-    <div class="body">
-      {{#each body}}
-        <h3>Format: <tt>{{@key}}</tt></h3>
-        {{#if example}}
-        <h3>Example</h3>
-        {{!-- {{json example}} --}}
-        <pre><code>{{example}}</code></pre>
-        {{/if}}
-      {{/each}}
-    </div>
-  {{/if}}
+  {{#each responses}}
+    {{body}}
+    <h3>Response Code</h3>
+    <p><strong>{{code}}</strong></p>
+    <h3>Example</h3>
+    {{!-- Use `json_from_string` once examples are syntactically correct JSON --}}
+    {{!-- {{json_from_string example}} --}}
+    <pre><code>{{example}}</code></pre>
+  {{/each}}
 {{/each}}

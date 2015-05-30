@@ -50,6 +50,7 @@ function flattenResources(res, traits) {
         }
         var clean = _.extend({}, res)
         delete clean.resources
+        clean.methods = flattenMethods(res.methods)
         clean.basePath = _.pluck(parents, 'relativeUri').join('')
         clean.path = res.relativeUri
         xs.push(clean)
@@ -60,6 +61,29 @@ function flattenResources(res, traits) {
     }
     recur([], res)
     return xs
+}
+
+// RAML nests its structure very heavily. This function attempts to pull it
+// apart, but is not very pretty. I'm sorry.
+//
+// Brian Mock (2015-05-29)
+function flattenMethods(methods) {
+    return _.map(methods, function(objForMethod) {
+        var obj = _.extend({}, objForMethod)
+        var methodName = objForMethod.method
+        obj.responses = _.map(objForMethod.responses, function(objForCode, code) {
+            var obj = {}
+            _.forEach(objForCode, function(objForBody, body) {
+                _.forEach(objForBody, function(objForRespType, respType) {
+                    obj.example = objForRespType.example
+                    obj.code = code
+                    obj.method = methodName
+                })
+            })
+            return obj
+        })
+        return obj
+    })
 }
 
 function write(x) {
@@ -135,8 +159,6 @@ function throwLater(e) {
         throw e
     }, 0)
 }
-
-// console.error(new Date())
 
 raml
     .loadFile(input)
