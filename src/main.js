@@ -112,6 +112,7 @@ var index = loadTemplate('index.handlebars')
 var resource = loadTemplate('resource.handlebars')
 var tableOfContents = loadTemplate('table_of_contents.handlebars')
 var style = loadTemplate('style.css')
+var JSON_PARSE_ERROR = loadTemplate('invalid_json.html')
 
 var resourceTemplate = handlebars.compile(resource)
 
@@ -142,14 +143,16 @@ handlebars.registerHelper('print_json', function(data, options) {
 })
 
 handlebars.registerHelper('json_from_string', function(data, options) {
+    var err = ''
     try {
         data = prettyJson(JSON.parse(data))
     } catch (e) {
-        data = "/// JSON Parse Error!\n\n" + data
+        err = JSON_PARSE_ERROR
     }
     var out = highlightjs.highlight('json', data)
     return new handlebars.SafeString(
-        '<pre class="hljs"><code class="lang-' + out.language + '">'
+        err
+        + '<pre class="hljs lang-json"><code>'
         + out.value
         + '</code></pre>'
     )
