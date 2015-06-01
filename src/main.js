@@ -161,6 +161,9 @@ handlebars.registerHelper('json', function(data, options) {
 })
 
 handlebars.registerHelper('json_from_string', function(data, options) {
+    if (data === undefined) {
+        return ''
+    }
     var err = ''
     try {
         data = prettyJson(JSON.parse(data))

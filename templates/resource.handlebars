@@ -11,8 +11,10 @@
       {{../basePath}}<strong>{{../  path}}</strong>
     </a>
   </h2>
-  <h3>Description</h3>
-  <p>{{description}}</p>
+  {{#if description}}
+    <h3>Description</h3>
+    <p>{{description}}</p>
+  {{/if}}
   {{#if queryParameters}}
     <h3>Parameters</h3>
     <ul>
@@ -32,7 +34,9 @@
     {{body}}
     <h3>Response Code</h3>
     <p><strong>{{code}}</strong></p>
-    <h3>Response Example</h3>
-    {{json_from_string example}}
+    {{#if example}}
+      <h3>Response Example</h3>
+      {{json_from_string example}}
+    {{/if}}
   {{/each}}
 {{/each}}
