@@ -108,23 +108,15 @@ function set(k, v) {
     }
 }
 
-var index = loadTemplate('index.handlebars')
-var resource = loadTemplate('resource.handlebars')
-var tableOfContents = loadTemplate('table_of_contents.handlebars')
-var style = loadTemplate('style.css')
+var INDEX = loadTemplate('index.handlebars')
+var RESOURCE = loadTemplate('resource.handlebars')
+var TABLE_OF_CONTENTS = loadTemplate('table_of_contents.handlebars')
+var STYLE = loadTemplate('style.css')
 var JSON_PARSE_ERROR = loadTemplate('invalid_json.html')
 
-var resourceTemplate = handlebars.compile(resource)
-
-handlebars.registerPartial('resource', resource)
-handlebars.registerPartial('table_of_contents', tableOfContents)
-handlebars.registerPartial('style', style)
-
-handlebars.registerHelper('emptyResourceCheck', function(options) {
-    if (this.methods || (this.description && this.parentUrl)) {
-        return options.fn(this);
-    }
-})
+handlebars.registerPartial('resource', RESOURCE)
+handlebars.registerPartial('table_of_contents', TABLE_OF_CONTENTS)
+handlebars.registerPartial('style', STYLE)
 
 handlebars.registerHelper('upper_case', function(s, options) {
     return s.toUpperCase()
@@ -133,14 +125,6 @@ handlebars.registerHelper('upper_case', function(s, options) {
 function prettyJson(x) {
     return JSON.stringify(x, null, JSON_INDENT_SIZE)
 }
-
-handlebars.registerHelper('print_json', function(data, options) {
-    return new handlebars.SafeString(
-        '<script>this.D='
-        + prettyJson(data)
-        + ';console.log(D);</script>'
-    )
-})
 
 handlebars.registerHelper('json_from_string', function(data, options) {
     var err = ''
@@ -162,7 +146,7 @@ handlebars.registerHelper('markdown', function(md, options) {
     return md ? new handlebars.SafeString(marked(md)) : ''
 })
 
-var toHtml = handlebars.compile(index, {
+var toHtml = handlebars.compile(INDEX, {
     preventIndent: true
 })
 
@@ -171,8 +155,6 @@ function throwLater(e) {
         throw e
     }, 0)
 }
-
-console.error("raml-fleece: " + Date())
 
 raml
     .loadFile(input)
