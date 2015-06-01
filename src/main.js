@@ -147,7 +147,7 @@ handlebars.registerHelper('json_from_string', function(data, options) {
     } catch (e) {
         data = "/// JSON Parse Error!\n\n" + data
     }
-    var out = highlightjs.highlightAuto(data)
+    var out = highlightjs.highlight('json', data)
     return new handlebars.SafeString(
         '<pre class="hljs"><code class="lang-' + out.language + '">'
         + out.value
