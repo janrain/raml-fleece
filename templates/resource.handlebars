@@ -14,7 +14,7 @@
   <h3>Description</h3>
   <p>{{description}}</p>
   {{#if queryParameters}}
-    <h3>Query Parameters</h3>
+    <h3>Parameters</h3>
     <ul>
     {{#each queryParameters}}
       <li>
@@ -24,11 +24,15 @@
     {{/each}}
     </ul>
   {{/if}}
+  {{#if requestExample}}
+    <h3>Request Example</h3>
+    {{json requestExample}}
+  {{/if}}
   {{#each responses}}
     {{body}}
     <h3>Response Code</h3>
     <p><strong>{{code}}</strong></p>
-    <h3>Example</h3>
+    <h3>Response Example</h3>
     {{json_from_string example}}
   {{/each}}
 {{/each}}

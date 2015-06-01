@@ -2,7 +2,7 @@
 var _ = require('lodash')
 var marked = require('marked')
 var handlebars = require('handlebars')
-var highlightjs = require('highlight.js')
+var hljs = require('highlight.js')
 var raml = require('raml-parser')
 var path = require('path')
 var fs = require('fs')
@@ -66,6 +66,28 @@ function flattenResources(res, traits) {
     return xs
 }
 
+function makeExampleFromType(t, name) {
+    if (t === "string") {
+        return "EXAMPLE: " + name
+    } else if (t === "number") {
+        return 12344567890
+    }
+    throw new Error("makeExampleFromType not implemented for type " + t)
+}
+
+function makeExampleOf(params) {
+    var obj = _.reduce(params, function(o, v) {
+        var example = 'example' in v
+            ? v.example
+            : makeExampleFromType(v.type, v.displayName)
+        _.set(o, v.displayName, example)
+        return o
+    }, {})
+    return Object.keys(obj).length > 0
+        ? obj
+        : undefined
+}
+
 // RAML nests its structure very heavily. This function attempts to pull it
 // apart, but is not very pretty. I'm sorry.
 //
@@ -74,6 +96,9 @@ function flattenMethods(methods) {
     return _.map(methods, function(objForMethod) {
         var obj = _.extend({}, objForMethod)
         var methodName = objForMethod.method
+        if (obj.queryParameters) {
+            obj.requestExample = makeExampleOf(obj.queryParameters)
+        }
         obj.responses = _.map(objForMethod.responses, function(objForCode, code) {
             var obj = {}
             _.forEach(objForCode, function(objForBody, body) {
@@ -126,6 +151,15 @@ function prettyJson(x) {
     return JSON.stringify(x, null, JSON_INDENT_SIZE)
 }
 
+handlebars.registerHelper('json', function(data, options) {
+    var out = hljs.highlight('json', prettyJson(data))
+    return new handlebars.SafeString(
+        '<pre class="hljs lang-json"><code>'
+        + out.value
+        + '</code></pre>'
+    )
+})
+
 handlebars.registerHelper('json_from_string', function(data, options) {
     var err = ''
     try {
@@ -133,7 +167,7 @@ handlebars.registerHelper('json_from_string', function(data, options) {
     } catch (e) {
         err = JSON_PARSE_ERROR
     }
-    var out = highlightjs.highlight('json', data)
+    var out = hljs.highlight('json', data)
     return new handlebars.SafeString(
         err
         + '<pre class="hljs lang-json"><code>'
