@@ -8,6 +8,8 @@ var path = require('path')
 var fs = require('fs')
 var pkg = require('../package.json')
 
+var JSON_INDENT_SIZE = 2
+
 function die(message) {
     console.error(message)
     process.exit(1)
@@ -20,7 +22,7 @@ if (args.length !== 1) {
 var input = args[0]
 
 function loadTemplate(x) {
-    var f = path.join(__dirname, '..', 'templates', x + '.handlebars')
+    var f = path.join(__dirname, '..', 'templates', x)
     return fs.readFileSync(f, 'utf-8')
 }
 
@@ -106,14 +108,16 @@ function set(k, v) {
     }
 }
 
-var index = loadTemplate('index')
-var resource = loadTemplate('resource')
-var tableOfContents = loadTemplate('table_of_contents')
+var index = loadTemplate('index.handlebars')
+var resource = loadTemplate('resource.handlebars')
+var tableOfContents = loadTemplate('table_of_contents.handlebars')
+var style = loadTemplate('style.css')
 
 var resourceTemplate = handlebars.compile(resource)
 
 handlebars.registerPartial('resource', resource)
 handlebars.registerPartial('table_of_contents', tableOfContents)
+handlebars.registerPartial('style', style)
 
 handlebars.registerHelper('emptyResourceCheck', function(options) {
     if (this.methods || (this.description && this.parentUrl)) {
@@ -126,7 +130,7 @@ handlebars.registerHelper('upper_case', function(s, options) {
 })
 
 function prettyJson(x) {
-    return JSON.stringify(x, null, 4)
+    return JSON.stringify(x, null, JSON_INDENT_SIZE)
 }
 
 handlebars.registerHelper('print_json', function(data, options) {

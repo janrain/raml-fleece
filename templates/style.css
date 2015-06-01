@@ -1,0 +1,119 @@
+.parent {
+    color: #888;
+}
+.label.method {
+    border-radius: 2px;
+    text-transform: uppercase;
+}
+h4.method {
+    text-transform: uppercase;
+}
+.label.method a {
+    color: inherit;
+}
+.label.method.wide {
+    display: inline-block;
+    min-width: 80px;
+    text-align: center;
+}
+.label.method.delete { background: #a44; }
+.label.method.post   { background: #4aa; }
+.label.method.put    { background: #a4c; }
+.label.method.get    { background: #4a4; }
+body {
+    position: relative;
+}
+#side-navbar {
+    position: fixed;
+    top: 50px;
+    left: 0;
+    bottom: 0;
+    overflow-y: scroll;
+    background: #fafafa;
+    border-right: 1px solid rgba(0, 0, 0, 0.10);
+    padding: 5px;
+}
+#side-navbar .nav-pills li {
+    margin: 0;
+}
+#side-navbar .nav-pills li a {
+    padding: 3px 10px;
+    font-size: 95%;
+    border: 1px solid transparent;
+}
+#side-navbar .nav-pills li:hover a {
+    background: #428bca;
+    color: white;
+}
+main {
+    margin-top: 70px;
+    padding: 0 15px;
+    max-width: 900px;
+}
+.anchor:before {
+    content: "";
+    display: block;
+    background: none;
+    height: 70px;
+    margin: -70px 0 0;
+}
+.sidebar-item a {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.endpoint {
+    margin-top: 50px;
+    margin-bottom: 20px;
+    color: black;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+}
+main h2 {
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+}
+main h1 { font-size: 32px; }
+main h2 { font-size: 20px; }
+main h3 { font-size: 16px; }
+.endpoint a {
+    color: black;
+}
+pre {
+    border: 0;
+}
+.navbar-inverse {
+    background: #428bca;
+    color: white;
+    border-color: rgba(0, 0, 0, 0.30);
+}
+.navbar-inverse .navbar-brand {
+    color: rgba(255, 255, 255, 0.70);
+}
+code {
+    background: #eee;
+    color: #000;
+}
+
+@media only screen {
+    #side-navbar {
+        width: 200px;
+    }
+    #side-navbar .nav-pills li a {
+        font-size: 85%;
+    }
+    main {
+        margin-left: 210px;
+    }
+}
+@media only screen and (min-width: 900px) {
+    #side-navbar {
+        width: 300px;
+    }
+    #side-navbar .nav-pills li a {
+        font-size: 90%;
+    }
+    main {
+        margin-left: 310px;
+    }
+}
