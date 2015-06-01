@@ -81,6 +81,8 @@ main h3 { font-size: 16px; }
 }
 pre {
     border: 0;
+    background: #444;
+    color: #ddd;
 }
 .navbar-inverse {
     background: #428bca;
