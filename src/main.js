@@ -2,6 +2,7 @@
 var _ = require('lodash')
 var marked = require('marked')
 var handlebars = require('handlebars')
+var highlightjs = require('highlight.js')
 var raml = require('raml-parser')
 var path = require('path')
 var fs = require('fs')
@@ -124,26 +125,28 @@ handlebars.registerHelper('upper_case', function(s, options) {
     return s.toUpperCase()
 })
 
+function prettyJson(x) {
+    return JSON.stringify(x, null, 4)
+}
+
 handlebars.registerHelper('print_json', function(data, options) {
     return new handlebars.SafeString(
         '<script>this.D='
-        + JSON.stringify(data, null, 2)
+        + prettyJson(data)
         + ';console.log(D);</script>'
     )
 })
 
-handlebars.registerHelper('json', function(data, options) {
-    return new handlebars.SafeString(
-        '<pre><code>'
-        + JSON.stringify(data, null, 2)
-        + '</code></pre>'
-    )
-})
-
 handlebars.registerHelper('json_from_string', function(data, options) {
+    try {
+        data = prettyJson(JSON.parse(data))
+    } catch (e) {
+        data = "/// JSON Parse Error!\n\n" + data
+    }
+    var out = highlightjs.highlightAuto(data)
     return new handlebars.SafeString(
-        '<pre><code>'
-        + JSON.stringify(JSON.parse(data), null, 2)
+        '<pre class="hljs"><code class="lang-' + out.language + '">'
+        + out.value
         + '</code></pre>'
     )
 })
@@ -152,13 +155,17 @@ handlebars.registerHelper('markdown', function(md, options) {
     return md ? new handlebars.SafeString(marked(md)) : ''
 })
 
-var toHtml = handlebars.compile(index)
+var toHtml = handlebars.compile(index, {
+    preventIndent: true
+})
 
 function throwLater(e) {
     setTimeout(function() {
         throw e
     }, 0)
 }
+
+console.error("raml-fleece: " + Date())
 
 raml
     .loadFile(input)

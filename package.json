@@ -6,6 +6,7 @@
   "repository": "janrain/raml-fleece",
   "dependencies": {
     "handlebars": "^3.0.3",
+    "highlight.js": "^8.6.0",
     "lodash": "^3.9.3",
     "marked": "^0.3.3",
     "raml-parser": "^0.8.11"
