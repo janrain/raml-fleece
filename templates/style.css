@@ -72,7 +72,12 @@ main h2 {
     margin-right: 10px;
     max-width: 900px;
 }
-
+.endpoint ul {
+    padding-left: 0;
+}
+.endpoint li {
+    list-style-type: none;
+}
 .response-code {
     font-weight: bold;
 }
