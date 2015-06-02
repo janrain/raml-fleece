@@ -19,31 +19,29 @@ h4.method {
 }
 .label.method.wide {
     display: inline-block;
-    min-width: 80px;
     text-align: center;
 }
-.label.method.delete { background: #a44; }
-.label.method.post   { background: #4aa; }
-.label.method.put    { background: #a4c; }
-.label.method.get    { background: #4a4; }
 body {
     position: relative;
     background: #eee;
 }
 #side-navbar {
     position: fixed;
+    background: #fff;
+    color: #000;
+    border-right: 2px solid #ddd;
     top: 0;
     left: 0;
     bottom: 0;
     overflow-y: scroll;
-    padding: 25px;
-    padding-left: 10px;
-    padding-right: 0;
+    padding: 25px 0;
 }
 #side-navbar .nav-pills li a {
     padding: 4px 10px;
     font-size: 95%;
     border: 1px solid transparent;
+    color: inherit;
+    border-radius: 0;
 }
 #side-navbar .nav-pills li:hover a {
     background: #428bca;
@@ -54,16 +52,18 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+main h1 {
+    text-align: center;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.10);
+    padding-bottom: 10px;
+}
 main h2 {
-    margin: 0 -10px;
     margin-bottom: 20px;
-    z-index: 1;
     color: black;
     padding: 10px;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.20);
 }
 .endpoint {
-    padding: 20px 10px;
+    padding: 10px;
     margin-bottom: 20px;
     border: 2px solid #ddd;
     background: #fff;
@@ -76,6 +76,10 @@ main h2 {
 .response-code {
     font-weight: bold;
 }
+.label.method.delete { background: #c00; }
+.label.method.post   { background: #0aa; }
+.label.method.put    { background: #a0c; }
+.label.method.get    { background: #0a0; }
 .response-code-2xx { color: #0a0; }
 .response-code-3xx { color: #aa0; }
 .response-code-4xx { color: #c00; }
@@ -84,7 +88,7 @@ main h1 {
     margin: 20px 10px;
 }
 main h3 {
-    margin: 10px -10px;
+    margin: 0 -10px;
     padding: 10px;
     border-bottom: 2px solid rgba(0, 0, 0, 0.10);
 }

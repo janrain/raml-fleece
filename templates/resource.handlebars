@@ -1,4 +1,3 @@
-<div class="endpoint">
 <h2 class="anchor" id="{{basePath}}{{path}}">
   <a href="#{{basePath}}{{path}}">
     {{#if basePath}}<span class="parent">{{basePath}}</span>{{/if}}{{path}}
@@ -6,6 +5,7 @@
 </h2>
 <p>{{markdown description}}</p>
 {{#each methods}}
+<div class="endpoint">
   <h3 class="anchor" id="{{upper_case method}}{{../basePath}}{{../  path}}">
     <span class="pull-right label label-default wide method {{method}}">{{method}}</span>
     <a href="#{{upper_case method}}{{../basePath}}{{../  path}}">
@@ -41,5 +41,5 @@
       {{json_from_string example}}
     {{/if}}
   {{/each}}
-{{/each}}
 </div>
+{{/each}}
