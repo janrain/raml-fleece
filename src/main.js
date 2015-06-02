@@ -87,7 +87,7 @@ function makeExampleFromType(t, name) {
     if (t === "string") {
         return "EXAMPLE: " + name
     } else if (t === "number") {
-        return 12344567890
+        return 1234567890
     }
     throw new Error("makeExampleFromType not implemented for type " + t)
 }
