@@ -28,15 +28,16 @@
     </ul>
   {{/if}}
   {{#each requestExamples}}
-    <h4>Request Example</h4>
-    {{json_from_string .}}
+    {{#if .}}
+      <h4>Request Example</h4>
+      {{json_from_string .}}
+    {{/if}}
   {{/each}}
   {{#each responses}}
     {{body}}
-    <h4>Response Code</h4>
-    <p>{{response_code code}}</p>
+    <h4>Response {{response_code code}}</h4>
+    <p>{{type}}</p>
     {{#if example}}
-      <h4>Response Example</h4>
       {{json_from_string example}}
     {{/if}}
   {{/each}}

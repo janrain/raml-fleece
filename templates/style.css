@@ -62,7 +62,6 @@ main h2 {
     padding: 10px;
     border-bottom: 2px solid rgba(0, 0, 0, 0.20);
 }
-
 .endpoint {
     padding: 20px 10px;
     margin-bottom: 20px;
@@ -75,7 +74,6 @@ main h2 {
 }
 
 .response-code {
-    font-size: 20px;
     font-weight: bold;
 }
 .response-code-2xx { color: #0a0; }

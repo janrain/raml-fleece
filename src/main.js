@@ -6,7 +6,9 @@ var hljs = require('highlight.js')
 var raml = require('raml-parser')
 var path = require('path')
 var fs = require('fs')
-var pkg = require('../package.json')
+var pkg = require('../package')
+
+var STATUS_CODES = require('../status-codes')
 
 var config = {
     version: pkg.version
@@ -145,9 +147,10 @@ function registerHelpersAndPartials() {
     })
     handlebars.registerHelper('response_code', function(num) {
         var n = Math.floor(num / 100)
+        var s = num + ' ' + STATUS_CODES[num]
         return new handlebars.SafeString(
-            '<span class="response-code response-code-' + n + 'xx">'
-            + handlebars.escapeExpression(num)
+            '<span class="pull-right response-code response-code-' + n + 'xx">'
+            + handlebars.escapeExpression(s)
             + '</span>'
         )
     })
