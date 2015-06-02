@@ -74,6 +74,7 @@ function flattenResources(res, traits) {
         clean.methods = flattenMethods(res.methods)
         clean.basePath = _.pluck(parents, 'relativeUri').join('')
         clean.path = res.relativeUri
+        clean.fullPath = clean.basePath + clean.path
         xs.push(clean)
         var newParents = parents.concat([res])
         _.forEach(res.resources, function(r) {
@@ -81,7 +82,7 @@ function flattenResources(res, traits) {
         })
     }
     recur([], res)
-    return xs
+    return _.sortBy(xs, 'fullPath')
 }
 
 // Generate example data for a data type.
