@@ -1,5 +1,5 @@
 .parent {
-    color: #888;
+    color: #555;
 }
 .label.method {
     border-radius: 2px;
@@ -31,7 +31,7 @@ body {
     overflow-y: scroll;
     background: #fafafa;
     border-right: 1px solid rgba(0, 0, 0, 0.10);
-    padding: 5px;
+    padding: 25px 0;
 }
 #side-navbar .nav-pills li {
     margin: 0;
@@ -40,6 +40,7 @@ body {
     padding: 3px 10px;
     font-size: 95%;
     border: 1px solid transparent;
+    border-radius: 0;
 }
 #side-navbar .nav-pills li:hover a {
     background: #428bca;
@@ -67,14 +68,22 @@ main {
     margin-bottom: 20px;
     color: black;
     padding-bottom: 10px;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+    border-bottom: 3px solid rgba(0, 0, 0, 0.20);
 }
+.response-code {
+    font-size: 20px;
+    font-weight: bold;
+}
+.response-code-2xx { color: #0a0; }
+.response-code-3xx { color: #aa0; }
+.response-code-4xx { color: #c00; }
+.response-code-5xx { color: #c00; }
 main h2 {
     padding-bottom: 10px;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 3px solid rgba(0, 0, 0, 0.10);
 }
-main h1 { font-size: 32px; }
-main h2 { font-size: 20px; }
+main h1 { font-size: 26px; }
+main h2 { font-size: 18px; }
 main h3 { font-size: 16px; }
 .endpoint a {
     color: black;

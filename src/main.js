@@ -143,6 +143,14 @@ function registerHelpersAndPartials() {
             + '</code></pre>'
         )
     })
+    handlebars.registerHelper('response_code', function(num) {
+        var n = Math.floor(num / 100)
+        return new handlebars.SafeString(
+            '<span class="response-code response-code-' + n + 'xx">'
+            + handlebars.escapeExpression(num)
+            + '</span>'
+        )
+    })
     handlebars.registerHelper('json_from_string', function(data) {
         if (data === undefined) {
             return ''
