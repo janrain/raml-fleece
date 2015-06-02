@@ -1,3 +1,9 @@
+/**
+ * This CSS needs to be refactored and generally made less brittle and horrible.
+ * It was made in a flurry, and I haven't had time to come back and clean it up.
+ * Sorry, future maintainer!
+ */
+
 .parent {
     color: #555;
 }
@@ -22,54 +28,52 @@ h4.method {
 .label.method.get    { background: #4a4; }
 body {
     position: relative;
+    background: #eee;
 }
 #side-navbar {
     position: fixed;
-    top: 50px;
+    top: 0;
     left: 0;
     bottom: 0;
     overflow-y: scroll;
-    background: #fafafa;
-    border-right: 1px solid rgba(0, 0, 0, 0.10);
-    padding: 25px 0;
-}
-#side-navbar .nav-pills li {
-    margin: 0;
+    padding: 25px;
+    padding-left: 10px;
+    padding-right: 0;
 }
 #side-navbar .nav-pills li a {
-    padding: 3px 10px;
+    padding: 4px 10px;
     font-size: 95%;
     border: 1px solid transparent;
-    border-radius: 0;
 }
 #side-navbar .nav-pills li:hover a {
     background: #428bca;
     color: white;
-}
-main {
-    margin-top: 70px;
-    padding: 0 15px;
-    max-width: 900px;
-}
-.anchor:before {
-    content: "";
-    display: block;
-    background: none;
-    height: 70px;
-    margin: -70px 0 0;
 }
 .sidebar-item a {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-.endpoint {
-    margin-top: 50px;
+main h2 {
+    margin: 0 -10px;
     margin-bottom: 20px;
+    z-index: 1;
     color: black;
-    padding-bottom: 10px;
-    border-bottom: 3px solid rgba(0, 0, 0, 0.20);
+    padding: 10px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.20);
 }
+
+.endpoint {
+    padding: 20px 10px;
+    margin-bottom: 20px;
+    border: 2px solid #ddd;
+    background: #fff;
+    border-radius: 4px;
+    margin-left: 10px;
+    margin-right: 10px;
+    max-width: 900px;
+}
+
 .response-code {
     font-size: 20px;
     font-weight: bold;
@@ -78,20 +82,27 @@ main {
 .response-code-3xx { color: #aa0; }
 .response-code-4xx { color: #c00; }
 .response-code-5xx { color: #c00; }
-main h2 {
-    padding-bottom: 10px;
-    border-bottom: 3px solid rgba(0, 0, 0, 0.10);
+main h1 {
+    margin: 20px 10px;
 }
-main h1 { font-size: 26px; }
-main h2 { font-size: 18px; }
-main h3 { font-size: 16px; }
-.endpoint a {
+main h3 {
+    margin: 10px -10px;
+    padding: 10px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.10);
+}
+main h2 { font-size: 26px; }
+main h3 { font-size: 18px; }
+main h4 { font-size: 16px; }
+main h2 a,
+main h2 a:hover {
     color: black;
 }
 pre {
     border: 0;
     background: #444;
     color: #ddd;
+    margin: 0 -10px;
+    border-radius: 0;
 }
 .navbar-inverse {
     background: #428bca;
@@ -114,7 +125,7 @@ code {
         font-size: 85%;
     }
     main {
-        margin-left: 210px;
+        margin-left: 200px;
     }
 }
 @media only screen and (min-width: 900px) {
@@ -125,6 +136,6 @@ code {
         font-size: 90%;
     }
     main {
-        margin-left: 310px;
+        margin-left: 300px;
     }
 }

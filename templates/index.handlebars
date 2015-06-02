@@ -14,19 +14,11 @@
     </style>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a href="#" class="navbar-brand">
-                    {{title}} Documentation
-                </a>
-            </div>
-        </div>
-    </nav>
     <div id="side-navbar">
         {{> table_of_contents}}
     </div>
     <main>
+        <h1>{{title}} Documentation</h1>
         {{#each resources}}
             {{#if path}}
                 {{> resource}}
