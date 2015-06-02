@@ -75,7 +75,19 @@ function makeExampleFromType(t, name) {
     throw new Error("makeExampleFromType not implemented for type " + t)
 }
 
-function makeExampleOf(params) {
+function tryPrettyJson(x) {
+    try {
+        return prettyJson(JSON.parse(x))
+    } catch (e) {
+        return x
+    }
+}
+
+function makeExamplesOf(obj) {
+    if (obj.body) {
+        return _.map(_.pluck(_.values(obj.body), 'example'), tryPrettyJson)
+    }
+    var params = obj.params
     var obj = _.reduce(params, function(o, v) {
         var example = 'example' in v
             ? v.example
@@ -84,7 +96,7 @@ function makeExampleOf(params) {
         return o
     }, {})
     return Object.keys(obj).length > 0
-        ? obj
+        ? [obj]
         : undefined
 }
 
@@ -96,9 +108,7 @@ function flattenMethods(methods) {
     return _.map(methods, function(objForMethod) {
         var obj = _.extend({}, objForMethod)
         var methodName = objForMethod.method
-        if (obj.queryParameters) {
-            obj.requestExample = makeExampleOf(obj.queryParameters)
-        }
+        obj.requestExamples = makeExamplesOf(obj)
         obj.responses = _.map(objForMethod.responses, function(objForCode, code) {
             var obj = {}
             _.forEach(objForCode, function(objForBody, body) {
