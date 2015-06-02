@@ -149,7 +149,7 @@ function registerHelpersAndPartials() {
         var n = Math.floor(num / 100)
         var s = num + ' ' + STATUS_CODES[num]
         return new handlebars.SafeString(
-            '<span class="pull-right response-code response-code-' + n + 'xx">'
+            '<span class="response-code response-code-' + n + 'xx">'
             + handlebars.escapeExpression(s)
             + '</span>'
         )

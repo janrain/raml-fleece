@@ -35,7 +35,7 @@
   {{/each}}
   {{#each responses}}
     {{body}}
-    <h4>Response {{response_code code}}</h4>
+    <h4>{{response_code code}}</h4>
     <p>{{type}}</p>
     {{#if example}}
       {{json_from_string example}}
