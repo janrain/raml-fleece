@@ -163,9 +163,7 @@ function registerHelpersAndPartials() {
     handlebars.registerHelper('markdown', function(md) {
         return md ? new handlebars.SafeString(marked(md)) : ''
     })
-    handlebars.registerHelper('upper_case', function(s) {
-        return s.toUpperCase()
-    })
+    handlebars.registerHelper('upper_case', _.method('toUpperCase'))
     handlebars.registerPartial('resource', RESOURCE)
     handlebars.registerPartial('table_of_contents', TABLE_OF_CONTENTS)
     handlebars.registerPartial('style', STYLE)
@@ -216,7 +214,9 @@ raml
     .loadFile(input)
     .catch(parseFail)
     .then(flattenHierarchy)
-    .then(tap(function(obj) { obj.config = config }))
+    .then(function(obj) {
+        return _.extend(obj, { config: config })
+    })
     .then(toHtml)
     .then(write)
     .catch(throwLater)
