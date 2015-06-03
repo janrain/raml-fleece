@@ -107,8 +107,9 @@ function flattenMethods(methods) {
     return _.map(methods, function(objForMethod) {
         var obj = _.extend({}, objForMethod)
         var methodName = objForMethod.method
+        var responses = objForMethod.responses
         obj.requestExamples = makeExamplesOf(obj)
-        obj.responses = _.map(objForMethod.responses, function(objForCode, code) {
+        obj.responses = _.map(responses, function(objForCode, code) {
             var obj = {}
             _.forEach(objForCode, function(objForBody, body) {
                 _.forEach(objForBody, function(objForRespType, respType) {
@@ -128,18 +129,18 @@ function registerHelpersAndPartials() {
     handlebars.registerHelper('json', function(data) {
         var out = hljs.highlight('json', prettyJson(data))
         return new handlebars.SafeString(
-            '<pre class="hljs lang-json"><code>'
-            + out.value
-            + '</code></pre>'
+            '<pre class="hljs lang-json"><code>' +
+            out.value +
+            '</code></pre>'
         )
     })
     handlebars.registerHelper('response_code', function(num) {
         var n = Math.floor(num / 100)
         var s = num + ' ' + STATUS_CODES[num]
         return new handlebars.SafeString(
-            '<span class="response-code response-code-' + n + 'xx">'
-            + handlebars.escapeExpression(s)
-            + '</span>'
+            '<span class="response-code response-code-' + n + 'xx">' +
+            handlebars.escapeExpression(s) +
+            '</span>'
         )
     })
     handlebars.registerHelper('json_from_string', function(data) {
@@ -154,10 +155,10 @@ function registerHelpersAndPartials() {
         }
         var out = hljs.highlight('json', data)
         return new handlebars.SafeString(
-            err
-            + '<pre class="hljs lang-json"><code>'
-            + out.value
-            + '</code></pre>'
+            err +
+            '<pre class="hljs lang-json"><code>' +
+            out.value +
+            '</code></pre>'
         )
     })
     handlebars.registerHelper('markdown', function(md) {
@@ -207,7 +208,7 @@ raml
     .catch(parseFail)
     .then(flattenHierarchy)
     .then(function(obj) {
-        return _.extend(obj, { config: config })
+        return _.extend(obj, {config: config})
     })
     .then(toHtml)
     .then(write)
