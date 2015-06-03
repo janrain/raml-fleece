@@ -169,14 +169,6 @@ function registerHelpersAndPartials() {
     handlebars.registerPartial('style', STYLE)
 }
 
-// Curried form of tap for injecting side-effects into a pipeline.
-function tap(f) {
-    return function(o) {
-        f(o)
-        return o
-    }
-}
-
 // Grab input RAML filename.
 var args = process.argv.slice(2)
 if (args.length !== 1) {
