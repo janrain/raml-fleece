@@ -7,151 +7,151 @@
  */
 
 .parent {
-    color: #555;
+  color: #555;
 }
 .label.method {
-    border-radius: 2px;
-    text-transform: uppercase;
+  border-radius: 2px;
+  text-transform: uppercase;
 }
 .badge {
-    border-radius: 2px;
+  border-radius: 2px;
 }
 h4.method {
-    text-transform: uppercase;
+  text-transform: uppercase;
 }
 .label.method a {
-    color: inherit;
+  color: inherit;
 }
 .label.method.wide {
-    display: inline-block;
-    text-align: center;
+  display: inline-block;
+  text-align: center;
 }
 body {
-    position: relative;
-    background: #eee;
+  position: relative;
+  background: #eee;
 }
 #side-navbar {
-    position: fixed;
-    background: #fff;
-    color: #000;
-    border-right: 2px solid #ddd;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    overflow-y: scroll;
-    padding: 25px 0;
+  position: fixed;
+  background: #fff;
+  color: #000;
+  border-right: 2px solid #ddd;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  overflow-y: scroll;
+  padding: 25px 0;
 }
 dl.params dt {
-    border-top: 2px dotted rgba(0, 0, 0, 0.10);
-    padding: 10px 0;
+  border-top: 2px dotted rgba(0, 0, 0, 0.10);
+  padding: 10px 0;
 }
 #side-navbar .nav-pills li a {
-    padding: 4px 10px;
-    font-size: 95%;
-    border: 1px solid transparent;
-    color: inherit;
-    border-radius: 0;
+  padding: 4px 10px;
+  font-size: 95%;
+  border: 1px solid transparent;
+  color: inherit;
+  border-radius: 0;
 }
 #side-navbar .nav-pills li:hover a {
-    background: #428bca;
-    color: white;
+  background: #428bca;
+  color: white;
 }
 .sidebar-item a {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 main h1 {
-    text-align: center;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.10);
-    padding-bottom: 10px;
+  text-align: center;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.10);
+  padding-bottom: 10px;
 }
 main h2 {
-    margin-bottom: 20px;
-    color: black;
-    padding: 10px;
+  margin-bottom: 20px;
+  color: black;
+  padding: 10px;
 }
 .endpoint {
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 2px solid #ddd;
-    background: #fff;
-    border-radius: 4px;
-    margin-left: 10px;
-    margin-right: 10px;
-    max-width: 900px;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 2px solid #ddd;
+  background: #fff;
+  border-radius: 4px;
+  margin-left: 10px;
+  margin-right: 10px;
+  max-width: 900px;
 }
 .endpoint ul {
-    padding-left: 0;
+  padding-left: 0;
 }
 .endpoint li {
-    list-style-type: none;
+  list-style-type: none;
 }
 .response-code {
-    font-weight: bold;
+  font-weight: bold;
 }
 .label.method.delete { background: #c00; }
 .label.method.post   { background: #0aa; }
 .label.method.put    { background: #a0c; }
 .label.method.get    { background: #0a0; }
-.response-code-2xx { color: #0a0; }
-.response-code-3xx { color: #aa0; }
-.response-code-4xx { color: #c00; }
-.response-code-5xx { color: #c00; }
+.response-code-2xx   { color: #0a0; }
+.response-code-3xx   { color: #aa0; }
+.response-code-4xx   { color: #c00; }
+.response-code-5xx   { color: #c00; }
 main h1 {
-    margin: 20px 10px;
+  margin: 20px 10px;
 }
 main h3 {
-    margin: 0 -10px;
-    padding: 10px;
-    border-bottom: 2px solid rgba(0, 0, 0, 0.10);
+  margin: 0 -10px;
+  padding: 10px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.10);
 }
 main h2 { font-size: 26px; }
 main h3 { font-size: 18px; }
 main h4 { font-size: 16px; }
 main h2 a,
 main h2 a:hover {
-    color: black;
+  color: black;
 }
 pre {
-    border: 0;
-    background: #444;
-    color: #ddd;
-    margin: 0 -10px;
-    border-radius: 0;
+  border: 0;
+  background: #444;
+  color: #ddd;
+  margin: 0 -10px;
+  border-radius: 0;
 }
 .navbar-inverse {
-    background: #428bca;
-    color: white;
-    border-color: rgba(0, 0, 0, 0.30);
+  background: #428bca;
+  color: white;
+  border-color: rgba(0, 0, 0, 0.30);
 }
 .navbar-inverse .navbar-brand {
-    color: rgba(255, 255, 255, 0.70);
+  color: rgba(255, 255, 255, 0.70);
 }
 code {
-    background: #eee;
-    color: #000;
+  background: #eee;
+  color: #000;
 }
 
 @media only screen {
-    #side-navbar {
-        width: 200px;
-    }
-    #side-navbar .nav-pills li a {
-        font-size: 85%;
-    }
-    main {
-        margin-left: 200px;
-    }
+  #side-navbar {
+    width: 200px;
+  }
+  #side-navbar .nav-pills li a {
+    font-size: 85%;
+  }
+  main {
+    margin-left: 200px;
+  }
 }
 @media only screen and (min-width: 900px) {
-    #side-navbar {
-        width: 300px;
-    }
-    #side-navbar .nav-pills li a {
-        font-size: 90%;
-    }
-    main {
-        margin-left: 300px;
-    }
+  #side-navbar {
+    width: 300px;
+  }
+  #side-navbar .nav-pills li a {
+    font-size: 90%;
+  }
+  main {
+    margin-left: 300px;
+  }
 }
