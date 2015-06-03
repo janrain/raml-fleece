@@ -3,7 +3,9 @@
     {{#if basePath}}<span class="parent">{{basePath}}</span>{{/if}}{{path}}
   </a>
 </h2>
-<p>{{markdown description}}</p>
+{{#if description}}
+  <p>{{markdown description}}</p>
+{{/if}}
 {{#each methods}}
 <div class="endpoint">
   <h3 class="anchor" id="{{upper_case method}}{{../basePath}}{{../  path}}">
@@ -14,7 +16,7 @@
   </h3>
   {{#if description}}
     <h4>Description</h4>
-    <p>{{description}}</p>
+    <p>{{markdown description}}</p>
   {{/if}}
   {{#if queryParameters}}
     <h4>Parameters</h4>
