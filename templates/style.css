@@ -43,9 +43,6 @@ dl.params dt {
     border-top: 2px dotted rgba(0, 0, 0, 0.10);
     padding: 10px 0;
 }
-dl.params dt:first-child {
-    border: 0;
-}
 #side-navbar .nav-pills li a {
     padding: 4px 10px;
     font-size: 95%;
