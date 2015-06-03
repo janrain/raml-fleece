@@ -20,14 +20,21 @@
   {{/if}}
   {{#if queryParameters}}
     <h4>Parameters</h4>
-    <ul>
+    <dl class="params">
     {{#each queryParameters}}
-      <li>
-        <i>({{type}})</i>
-        <b><tt>{{@key}}</tt></b>
-      </li>
+      <dt>
+        <tt>{{@key}}</tt>
+        <span class="pull-right">
+          {{#if type}}<span class="badge">{{type}}</span>{{/if}}
+          {{#if required}}<span class="badge">required</span>{{/if}}
+        </span>
+      </dt>
+      <dd>
+        {{#if description}}<p>{{description}}</p>{{/if}}
+        {{#if example}}<code>{{example}}</code>{{/if}}
+      </dd>
     {{/each}}
-    </ul>
+    </dl>
   {{/if}}
   {{#each requestExamples}}
     {{#if .}}

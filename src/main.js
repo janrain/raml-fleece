@@ -1,4 +1,12 @@
 #!/usr/bin/env node
+'use strict'
+
+// TODO: Show headers.
+// TODO: Show HTTPS.
+// TODO: Show OAuth.
+// TODO: Show query parameter enums.
+// TODO: Show query parameter default values.
+
 var _ = require('lodash')
 var marked = require('marked')
 var handlebars = require('handlebars')
@@ -85,33 +93,12 @@ function flattenResources(res, traits) {
     return _.sortBy(xs, 'fullPath')
 }
 
-// Generate example data for a data type.
-function makeExampleFromType(t, name) {
-    if (t === "string") {
-        return "EXAMPLE: " + name
-    } else if (t === "number") {
-        return 1234567890
-    }
-    throw new Error("makeExampleFromType not implemented for type " + t)
-}
-
 // Flatten all the examples for a resource into a list, or generate a JSON body
 // example based on the declared parameters, filling in junk data.
 function makeExamplesOf(obj) {
     if (obj.body) {
         return _.map(_.pluck(_.values(obj.body), 'example'), tryPrettyJson)
     }
-    var params = obj.params
-    var obj = _.reduce(params, function(o, v) {
-        var example = 'example' in v
-            ? v.example
-            : makeExampleFromType(v.type, v.displayName)
-        _.set(o, v.displayName, example)
-        return o
-    }, {})
-    return Object.keys(obj).length > 0
-        ? [obj]
-        : undefined
 }
 
 // Flattens the various methods defined on a resource, so we can have a list at

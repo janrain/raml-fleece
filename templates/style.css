@@ -11,6 +11,9 @@
     border-radius: 2px;
     text-transform: uppercase;
 }
+.badge {
+    border-radius: 2px;
+}
 h4.method {
     text-transform: uppercase;
 }
@@ -35,6 +38,13 @@ body {
     bottom: 0;
     overflow-y: scroll;
     padding: 25px 0;
+}
+dl.params dt {
+    border-top: 2px dashed rgba(0, 0, 0, 0.10);
+    padding: 10px 0;
+}
+dl.params dt:first-child {
+    border: 0;
 }
 #side-navbar .nav-pills li a {
     padding: 4px 10px;
