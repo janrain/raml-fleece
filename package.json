@@ -12,6 +12,7 @@
     "raml-parser": "^0.8.11"
   },
   "scripts": {
+    "travis": "jshint src/*.js && jscs src/*.js",
     "jshint": "jshint",
     "jscs": "jscs"
   },
