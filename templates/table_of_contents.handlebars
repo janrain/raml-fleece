@@ -1,0 +1,12 @@
+<ul class="nav nav-pills nav-stacked">
+  {{#each resources}}
+    {{#if path}}
+      <li class="sidebar-item">
+        <a href="#{{basePath}}{{path}}"
+           title="{{basePath}}{{path}}">
+          {{basePath}}<strong>{{path}}</strong>
+        </a>
+      </li>
+    {{/if}}
+  {{/each}}
+</ul>
