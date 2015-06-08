@@ -1,20 +1,23 @@
-Purpose
-=======
+# Purpose
 
-raml-fleece turns RAML into a readable HTML file.
+_raml-fleece_ turns RAML into a readable HTML file.
 
-Installation
-============
 
-`npm install -g janrain/raml-fleece`
+# Key Features
 
-Usage
-=====
+- Sidebar containing all resources for easy navigation
+- All headers are links
+- Links produce readable URL fragments (e.g. `http://example.com/api#GET/users`)
+- No collapsed elements make searching easy for browsers
 
-`raml-fleece api.raml > index.html`
+# Installation
 
-TODO
-====
+    npm install -g janrain/raml-fleece
 
-- Remove dependency on raml2html
-- Write new templates
+# Usage
+
+    raml-fleece api.raml > index.html
+
+# Thanks
+
+This tool was originally built using [raml2html](https://github.com/kevinrenskers/raml2html).
