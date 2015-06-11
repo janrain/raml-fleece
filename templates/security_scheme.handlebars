@@ -1,0 +1,40 @@
+<div class="card">
+<h3 id="security:{{@key}}">
+  <span class="pull-right label label-default">
+    <span class="glyphicon glyphicon-lock"></span>
+    {{type}}
+  </span>
+  <a href="#security:{{@key}}">
+    {{type}}
+  </a>
+</h3>
+{{#if description}}
+  <p>{{markdown description}}
+  {{#with describedBy}}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Header</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each headers}}
+          <tr>
+            <td>{{@key}}</td>
+            <td>{{description}}</td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    <h4>Responses</h4>
+    {{#each responses}}
+      <h4>{{response_code @key}}</h4>
+      <p>{{type}}</p>
+      {{#if description}}
+        <p>{{description}}</p>
+      {{/if}}
+    {{/each}}
+  {{/with}}
+{{/if}}
+</div>

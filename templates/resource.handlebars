@@ -7,13 +7,28 @@
   <p>{{markdown description}}</p>
 {{/if}}
 {{#each methods}}
-<div class="endpoint">
+<div class="card">
   <h3 class="anchor" id="{{upper_case method}}{{../basePath}}{{../  path}}">
-    <span class="pull-right label label-default wide method {{method}}">{{method}}</span>
+    <span class="pull-right label label-default wide method {{method}}">
+      {{method}}
+    </span>
     <a href="#{{upper_case method}}{{../basePath}}{{../  path}}">
       {{../basePath}}<strong>{{../  path}}</strong>
     </a>
   </h3>
+  {{#if securedBy}}
+    <h4>Security</h4>
+    <ul>
+    {{#each securedBy}}
+    <li>
+      <a href="#security:{{.}}">
+        <span class="glyphicon glyphicon-lock"></span>
+        {{name_for_security_scheme .}}
+      </a>
+    </li>
+    {{/each}}
+    </ul>
+  {{/if}}
   {{#if description}}
     <h4>Description</h4>
     <p>{{markdown description}}</p>
