@@ -52,18 +52,21 @@ function loadTemplate(x) {
 // Flatten RAML's nested hierarchy of traits and resources.
 function flattenHierarchy(root) {
   var title = root.title;
-  var traits = traitsToObject(root.traits);
+  var traits = arrayOfObjectsToObject(root.traits);
   var resources = flattenResources(root, root.traits);
-  return {
+  var securitySchemes = arrayOfObjectsToObject(root.securitySchemes)
+  var obj = {
+    securitySchemes: securitySchemes,
     title: root.title,
     traits: traits,
     resources: resources
   };
+  return obj;
 }
 
-// Convert traits from a list of objects to an object.
-function traitsToObject(traits) {
-  return _.reduce(traits, function(acc, obj) {
+// Convert list of objects to an object.
+function arrayOfObjectsToObject(xs) {
+  return _.reduce(xs, function(acc, obj) {
     var key = Object.keys(obj)[0];
     acc[key] = obj[key];
     return acc;
@@ -136,12 +139,20 @@ function registerHelpersAndPartials() {
   });
   handlebars.registerHelper('response_code', function(num) {
     var n = Math.floor(num / 100);
-    var s = num + ' ' + STATUS_CODES[num];
+    var s = '' + num;
+    if (num in STATUS_CODES) {
+      s += ' ' + STATUS_CODES[num];
+    }
     return new handlebars.SafeString(
       '<span class="response-code response-code-' + n + 'xx">' +
       handlebars.escapeExpression(s) +
       '</span>'
     );
+  });
+  handlebars.registerHelper('name_for_security_scheme', function(key, o) {
+    return key === null
+      ? "Security Optional"
+      : o.data.root.securitySchemes[key].type;
   });
   handlebars.registerHelper('json_from_string', function(data) {
     if (data === undefined) {
@@ -166,6 +177,7 @@ function registerHelpersAndPartials() {
   });
   handlebars.registerHelper('upper_case', _.method('toUpperCase'));
   handlebars.registerPartial('resource', RESOURCE);
+  handlebars.registerPartial('security_scheme', SECURITY_SCHEME);
   handlebars.registerPartial('table_of_contents', TABLE_OF_CONTENTS);
   handlebars.registerPartial('style', STYLE);
 }
@@ -183,6 +195,7 @@ var RESOURCE = loadTemplate('resource.handlebars');
 var TABLE_OF_CONTENTS = loadTemplate('table_of_contents.handlebars');
 var STYLE = loadTemplate('style.css');
 var JSON_PARSE_ERROR = loadTemplate('invalid_json.html');
+var SECURITY_SCHEME = loadTemplate('security_scheme.handlebars');
 var toHtml = handlebars.compile(INDEX, {
   preventIndent: true
 });

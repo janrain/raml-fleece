@@ -19,10 +19,14 @@
   </div>
   <main>
     <h1>{{title}} Documentation</h1>
+    <h2>Security Schemes</h2>
     {{#each resources}}
       {{#if path}}
         {{> resource}}
       {{/if}}
+    {{/each}}
+    {{#each securitySchemes}}
+      {{> security_scheme}}
     {{/each}}
   </main>
 </body>
