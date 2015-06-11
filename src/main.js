@@ -54,7 +54,7 @@ function flattenHierarchy(root) {
   var title = root.title;
   var traits = arrayOfObjectsToObject(root.traits);
   var resources = flattenResources(root, root.traits);
-  var securitySchemes = arrayOfObjectsToObject(root.securitySchemes)
+  var securitySchemes = arrayOfObjectsToObject(root.securitySchemes);
   var obj = {
     securitySchemes: securitySchemes,
     title: root.title,
@@ -150,9 +150,9 @@ function registerHelpersAndPartials() {
     );
   });
   handlebars.registerHelper('name_for_security_scheme', function(key, o) {
-    return key === null
-      ? "Security Optional"
-      : o.data.root.securitySchemes[key].type;
+    return key === null ?
+      'Security Optional' :
+      o.data.root.securitySchemes[key].type;
   });
   handlebars.registerHelper('json_from_string', function(data) {
     if (data === undefined) {
