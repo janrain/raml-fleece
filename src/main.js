@@ -56,6 +56,8 @@ function flattenHierarchy(root) {
   var resources = flattenResources(root, root.traits);
   var securitySchemes = arrayOfObjectsToObject(root.securitySchemes);
   var obj = {
+    baseUri: root.baseUri,
+    baseUriParameters: root.baseUriParameters,
     securitySchemes: securitySchemes,
     title: root.title,
     traits: traits,
@@ -180,6 +182,7 @@ function registerHelpersAndPartials() {
   handlebars.registerPartial('security_scheme', SECURITY_SCHEME);
   handlebars.registerPartial('table_of_contents', TABLE_OF_CONTENTS);
   handlebars.registerPartial('style', STYLE);
+  handlebars.registerPartial('parameters', PARAMETERS);
 }
 
 // Grab input RAML filename.
@@ -194,6 +197,7 @@ var INDEX = loadTemplate('index.handlebars');
 var RESOURCE = loadTemplate('resource.handlebars');
 var TABLE_OF_CONTENTS = loadTemplate('table_of_contents.handlebars');
 var STYLE = loadTemplate('style.css');
+var PARAMETERS = loadTemplate('parameters.handlebars');
 var JSON_PARSE_ERROR = loadTemplate('invalid_json.html');
 var SECURITY_SCHEME = loadTemplate('security_scheme.handlebars');
 var toHtml = handlebars.compile(INDEX, {
