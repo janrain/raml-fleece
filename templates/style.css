@@ -28,7 +28,7 @@
 .badge {
   border-radius: 2px;
 }
-.verb span{
+.verb span {
   color: inherit;
   transform: rotate(90deg);
   display: block;

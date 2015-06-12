@@ -5,16 +5,18 @@
   </a>
 </h3>
 {{#if description}}
-  <div class="description">
-    <p>{{markdown description}}</p>
-  </div>
+  <div class="description">{{markdown description}}</div>
 {{/if}}
 {{#if uriParameters}}
   {{> parameters type="URI" params=uriParameters}}
 {{/if}}
 {{#each methods}}
 <div class="method">
-    <a class="verb {{method}}" id="{{upper_case method}}{{../basePath}}{{../  path}}" href="#{{upper_case method}}{{../basePath}}{{../  path}}"><span>{{method}}</span></a>
+    <a
+      class="verb {{method}}"
+      id="{{upper_case method}}{{../basePath}}{{../  path}}"
+      href="#{{upper_case method}}{{../basePath}}{{../  path}}"
+    ><span>{{method}}</span></a>
   {{#if securedBy}}
     <h4>Security</h4>
     <ul>
