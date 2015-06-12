@@ -18,13 +18,23 @@
     {{> table_of_contents}}
   </div>
   <main>
-    <h1>{{title}} Documentation</h1>
+    <h1 class="main-heading">{{title}} Documentation</h1>
+    {{#if baseUri}}
+      <h2>Base URI</h2>
+      <div class="card api-metadata">
+        <h3>{{baseUri}}</h3>
+        {{#if baseUriParameters}}
+          {{> parameters type="URI" params=baseUriParameters}}
+        {{/if}}
+      </div>
+    {{/if}}
     {{#if securitySchemes}}
       <h2>Security Schemes</h2>
       {{#each securitySchemes}}
         {{> security_scheme}}
       {{/each}}
     {{/if}}
+    <h2>Endpoints</h2>
     {{#each resources}}
       {{#if path}}
         {{> resource}}

@@ -6,33 +6,41 @@
  * Brian Mock (2015-06-03)
  */
 
+.uri-parameter-name {
+  font-weight: bold;
+}
+
 .parent {
   color: #555;
 }
-.label.method {
-  border-radius: 2px;
+.verb {
   text-transform: uppercase;
+  position: absolute;
+  display: block;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 20px;
+}
+.verb:hover {
+  text-decoration: none;
 }
 .badge {
   border-radius: 2px;
 }
-h4.method {
-  text-transform: uppercase;
-}
-.label.method a {
+.verb span {
   color: inherit;
-}
-.label.method.wide {
-  display: inline-block;
-  text-align: center;
+  transform: rotate(90deg);
+  display: block;
+  position: relative;
+  top: 12px;
+  color: white;
+  font-weight: bold;
+  font-size: 0.8em;
 }
 body {
   position: relative;
   background: #eee;
-}
-.card .pull-right .label {
-  margin: 0 2px;
-  min-height: 24px;
 }
 #side-navbar {
   position: fixed;
@@ -45,7 +53,14 @@ body {
   overflow-y: scroll;
   padding: 25px 0;
 }
-dl.params dt {
+.params {
+  padding: 0 10px 1px;
+  border-bottom: 2px solid #ddd;
+}
+.params:last-child {
+  border-bottom: none;
+}
+.params dl dt {
   border-top: 2px dotted rgba(0, 0, 0, 0.10);
   padding: 10px 0;
 }
@@ -65,27 +80,21 @@ dl.params dt {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-main h1 {
+h1.main-heading {
   text-align: center;
   border-bottom: 2px solid rgba(0, 0, 0, 0.10);
   padding-bottom: 10px;
 }
 main h2 {
-  margin-bottom: 20px;
+  margin: 2px 0;
   color: black;
   padding: 10px;
 }
-main h1 a,
-main h2 a,
-main h3 a {
-  display: block;
-}
 .card {
-  padding: 10px;
   margin-bottom: 20px;
   border: 2px solid #ddd;
   background: #fff;
-  border-radius: 4px;
+  border-radius: 4px 4px 0 0;
   margin-left: 10px;
   margin-right: 10px;
   max-width: 900px;
@@ -103,10 +112,10 @@ main h3 a {
 .response-code {
   font-weight: bold;
 }
-.label.method.delete { background: #c00; }
-.label.method.post   { background: #0aa; }
-.label.method.put    { background: #a0c; }
-.label.method.get    { background: #0a0; }
+.verb.delete { background: #c00; }
+.verb.post   { background: #0aa; }
+.verb.put    { background: #a0c; }
+.verb.get    { background: #0a0; }
 .response-code-2xx   { color: #0a0; }
 .response-code-3xx   { color: #aa0; }
 .response-code-4xx   { color: #c00; }
@@ -114,10 +123,14 @@ main h3 a {
 main h1 {
   margin: 20px 10px;
 }
-main h3 {
-  margin: 0 -10px;
-  padding: 10px;
+.card h3 {
+  margin: 0;
   border-bottom: 2px solid rgba(0, 0, 0, 0.10);
+}
+.api-metadata h3, .anchor a {
+  padding: 10px;
+  display: block;
+  color: #000;
 }
 main h2 { font-size: 26px; }
 main h3 { font-size: 18px; }
@@ -130,8 +143,10 @@ pre {
   border: 0;
   background: #444;
   color: #ddd;
-  margin: 0 -10px;
   border-radius: 0;
+}
+.method pre {
+  margin: 0 0 0 -5px;
 }
 .navbar-inverse {
   background: #428bca;
@@ -144,6 +159,17 @@ pre {
 code {
   background: #eee;
   color: #000;
+}
+.description {
+  padding: 0 10px;
+}
+.method {
+  position: relative;
+  padding: 2px 0 0 25px;
+  border-bottom: 10px solid #fff;
+}
+.method:last-child {
+  border-bottom: none;
 }
 
 @media only screen {

@@ -1,0 +1,18 @@
+<div class="params">
+  <h4>{{type}} Parameters</h4>
+  <dl>
+  {{#each params}}
+    <dt>
+      <tt>{{@key}}</tt>
+      <span class="pull-right">
+        {{#if type}}<span class="badge">{{type}}</span>{{/if}}
+        {{#if required}}<span class="badge">required</span>{{/if}}
+      </span>
+    </dt>
+    <dd>
+      {{#if description}}<p>{{markdown description}}</p>{{/if}}
+      {{#if example}}<code>{{example}}</code>{{/if}}
+    </dd>
+  {{/each}}
+  </dl>
+</div>
