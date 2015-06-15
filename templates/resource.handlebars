@@ -37,6 +37,13 @@
   {{#if queryParameters}}
     {{> parameters type="Query" params=uriParameters}}
   {{/if}}
+  {{#each body}}
+    {{!-- Type = @key --}}
+    {{#if schema}}
+      <h4>Request JSON Schema</h4>
+      {{json_from_string schema}}
+    {{/if}}
+  {{/each}}
   {{#each requestExamples}}
     {{#if .}}
       <h4>Request Example</h4>
@@ -46,6 +53,10 @@
   {{#each responses}}
     {{body}}
     <h4>{{response_code code}}</h4>
+    {{#if schema}}
+      <h4>Response JSON Schema</h4>
+      {{json_from_string schema}}
+    {{/if}}
     <p>{{type}}</p>
     {{#if example}}
       {{json_from_string example}}

@@ -121,6 +121,7 @@ function flattenMethods(methods) {
           obj.example = objForRespType.example;
           obj.code = code;
           obj.method = methodName;
+          obj.schema = objForRespType.schema;
         });
       });
       return obj;
