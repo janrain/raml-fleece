@@ -99,13 +99,13 @@ main h2 {
   margin-right: 10px;
   max-width: 900px;
 }
-.card ul {
+.card ul.security-schemes {
   padding-left: 0;
 }
-.card li {
+.card ul.security-schemes li {
   list-style-type: none;
 }
-.card li a {
+.card ul.security-schemes li a {
   display: block;
   padding: 4px 0;
 }
