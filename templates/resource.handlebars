@@ -51,8 +51,12 @@
     {{/if}}
   {{/each}}
   {{#each responses}}
-    {{body}}
-    <h4>{{response_code code}}</h4>
+    {{#if body}}
+      {{body}}
+    {{/if}}
+    {{#if code}}
+      <h4>{{response_code code}}</h4>
+    {{/if}}
     {{#if schema}}
       <h4>Response JSON Schema</h4>
       {{json_from_string schema}}

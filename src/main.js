@@ -104,6 +104,7 @@ function makeExamplesOf(obj) {
   if (obj.body) {
     return _.map(_.pluck(_.values(obj.body), 'example'), tryPrettyJson);
   }
+  return [];
 }
 
 // Flattens the various methods defined on a resource, so we can have a list at
@@ -111,16 +112,15 @@ function makeExamplesOf(obj) {
 function flattenMethods(methods) {
   return _.map(methods, function(objForMethod) {
     var obj = _.extend({}, objForMethod);
-    var methodName = objForMethod.method;
     var responses = objForMethod.responses;
     obj.requestExamples = makeExamplesOf(obj);
     obj.responses = _.map(responses, function(objForCode, code) {
       var obj = {};
+      obj.code = code;
+      obj.method = objForMethod.method;
       _.forEach(objForCode, function(objForBody, body) {
         _.forEach(objForBody, function(objForRespType, respType) {
           obj.example = objForRespType.example;
-          obj.code = code;
-          obj.method = methodName;
           obj.schema = objForRespType.schema;
         });
       });
