@@ -118,6 +118,7 @@ function flattenMethods(methods) {
       var obj = {};
       obj.code = code;
       obj.method = objForMethod.method;
+      obj.description = objForCode.description;
       _.forEach(objForCode, function(objForBody, body) {
         _.forEach(objForBody, function(objForRespType, respType) {
           obj.example = objForRespType.example;
