@@ -52,10 +52,13 @@
   {{/each}}
   {{#each responses}}
     {{#if body}}
-      {{body}}
+      <p>{{body}}</p>
     {{/if}}
     {{#if code}}
       <h4>{{response_code code}}</h4>
+    {{/if}}
+    {{#if description}}
+      <p>{{description}}</p>
     {{/if}}
     {{#if schema}}
       <h4>Response JSON Schema</h4>
