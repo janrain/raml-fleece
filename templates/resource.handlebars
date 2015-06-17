@@ -41,13 +41,13 @@
     {{!-- Type = @key --}}
     {{#if schema}}
       <h4>Request JSON Schema</h4>
-      {{json_from_string schema}}
+      {{show_code schema type="json"}}
     {{/if}}
   {{/each}}
   {{#each requestExamples}}
     {{#if .}}
       <h4>Request Example</h4>
-      {{json_from_string .}}
+      {{show_code example type=type}}
     {{/if}}
   {{/each}}
   {{#each responses}}
@@ -58,15 +58,20 @@
       <h4>{{response_code code}}</h4>
     {{/if}}
     {{#if description}}
-      <p>{{description}}</p>
+      <p>{{markdown description}}</p>
     {{/if}}
     {{#if schema}}
       <h4>Response JSON Schema</h4>
-      {{json_from_string schema}}
+      {{show_code schema type="json"}}
     {{/if}}
-    <p>{{type}}</p>
     {{#if example}}
-      {{json_from_string example}}
+      <h4>
+        Response Example
+        {{#if type}}
+          (<tt>{{type}}</tt>)
+        {{/if}}
+      </h4>
+      {{show_code example type=type}}
     {{/if}}
   {{/each}}
 </div>
