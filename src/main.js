@@ -164,6 +164,7 @@ function registerHelpersAndPartials() {
     var lang = o.hash.type ?
       stripContentTypePrefix(o.hash.type) :
       undefined;
+    var out;
     if (lang === 'json') {
       var err = '';
       try {
@@ -171,7 +172,7 @@ function registerHelpersAndPartials() {
       } catch (e) {
         err = JSON_PARSE_ERROR;
       }
-      var out = hljs.highlight('json', data);
+      out = hljs.highlight('json', data);
       return new handlebars.SafeString(
         err +
         '<pre class="hljs lang-json"><code>' +
@@ -179,7 +180,7 @@ function registerHelpersAndPartials() {
         '</code></pre>'
       );
     } else if (lang === 'html' || lang === 'xml') {
-      var out = hljs.highlight(lang, data);
+      out = hljs.highlight(lang, data);
       return new handlebars.SafeString(
         '<pre class="hljs lang-' + out.language +
         '"><code>' +
