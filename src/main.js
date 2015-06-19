@@ -27,16 +27,6 @@ function prettyJson(x) {
   return JSON.stringify(x, null, JSON_INDENT_SIZE);
 }
 
-// Try to pretty print a JSON string, falling back to the original if there's a
-// parse error.
-function tryPrettyJson(x) {
-  try {
-    return prettyJson(JSON.parse(x));
-  } catch (e) {
-    return x;
-  }
-}
-
 // Print error and exit 1 so we can break automated builds and such.
 function die(message) {
   console.error(message);
@@ -101,10 +91,20 @@ function flattenResources(res, traits) {
 // Flatten all the examples for a resource into a list, or generate a JSON body
 // example based on the declared parameters, filling in junk data.
 function makeExamplesOf(obj) {
-  if (obj.body) {
-    return _.map(_.pluck(_.values(obj.body), 'example'), tryPrettyJson);
+  return _.map(obj.body, function(val, key) {
+    return {
+      type: _.isString(key) ? key : undefined,
+      example: val.example,
+      schema: val.schema
+    };
+  });
+}
+
+function stripContentTypePrefix(type) {
+  if (!_.isString(type)) {
+    throw new Error('not a string: ' + type);
   }
-  return [];
+  return type.replace(/^[^\/]*\//, '');
 }
 
 // Flattens the various methods defined on a resource, so we can have a list at
@@ -119,11 +119,10 @@ function flattenMethods(methods) {
       obj.code = code;
       obj.method = objForMethod.method;
       obj.description = objForCode.description;
-      _.forEach(objForCode, function(objForBody, body) {
-        _.forEach(objForBody, function(objForRespType, respType) {
-          obj.example = objForRespType.example;
-          obj.schema = objForRespType.schema;
-        });
+      _.forEach(objForCode.body, function(objForRespType, respType) {
+        obj.type = respType;
+        obj.example = objForRespType.example;
+        obj.schema = objForRespType.schema;
       });
       return obj;
     });
@@ -158,23 +157,43 @@ function registerHelpersAndPartials() {
       'Security Optional' :
       o.data.root.securitySchemes[key].type;
   });
-  handlebars.registerHelper('json_from_string', function(data) {
+  handlebars.registerHelper('show_code', function(data, o) {
     if (data === undefined) {
       return '';
     }
-    var err = '';
-    try {
-      data = prettyJson(JSON.parse(data));
-    } catch (e) {
-      err = JSON_PARSE_ERROR;
+    var lang = o.hash.type ?
+      stripContentTypePrefix(o.hash.type) :
+      undefined;
+    var out;
+    if (lang === 'json') {
+      var err = '';
+      try {
+        data = prettyJson(JSON.parse(data));
+      } catch (e) {
+        err = JSON_PARSE_ERROR;
+      }
+      out = hljs.highlight('json', data);
+      return new handlebars.SafeString(
+        err +
+        '<pre class="hljs lang-json"><code>' +
+        out.value +
+        '</code></pre>'
+      );
+    } else if (lang === 'html' || lang === 'xml') {
+      out = hljs.highlight(lang, data);
+      return new handlebars.SafeString(
+        '<pre class="hljs lang-' + out.language +
+        '"><code>' +
+        out.value +
+        '</code></pre>'
+      );
+    } else {
+      return new handlebars.SafeString(
+        '<pre><code>' +
+        handlebars.escapeExpression(data) +
+        '</code></pre>'
+      );
     }
-    var out = hljs.highlight('json', data);
-    return new handlebars.SafeString(
-      err +
-      '<pre class="hljs lang-json"><code>' +
-      out.value +
-      '</code></pre>'
-    );
   });
   handlebars.registerHelper('markdown', function(md) {
     return md ? new handlebars.SafeString(marked(md)) : '';

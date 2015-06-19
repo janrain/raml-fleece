@@ -115,6 +115,7 @@ main h2 {
 .verb.delete { background: #c00; }
 .verb.post   { background: #0aa; }
 .verb.put    { background: #a0c; }
+.verb.patch  { background: #888; }
 .verb.get    { background: #0a0; }
 .response-code-2xx   { color: #0a0; }
 .response-code-3xx   { color: #aa0; }
@@ -141,8 +142,8 @@ main h2 a:hover {
 }
 pre {
   border: 0;
-  background: #444;
-  color: #ddd;
+  background: #2b2b2b;
+  color: #b9b9b9;
   border-radius: 0;
 }
 .method pre {

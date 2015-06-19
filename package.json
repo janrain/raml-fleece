@@ -1,6 +1,6 @@
 {
   "name": "raml-fleece",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "license": "MIT",
   "bin": "./src/main.js",
   "repository": "janrain/raml-fleece",
