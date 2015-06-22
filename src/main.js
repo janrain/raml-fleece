@@ -8,35 +8,18 @@
 // TODO: Show query parameter default values.
 
 var _ = require('lodash');
-var marked = require('marked');
-var handlebars = require('handlebars');
-var hljs = require('highlight.js');
 var raml = require('raml-parser');
-var path = require('path');
-var fs = require('fs');
 var pkg = require('../package');
-
-var STATUS_CODES = require('../status-codes');
+var toHtml = require('./to-html').toHtml;
 
 var config = {
   version: pkg.version
 };
 
-var JSON_INDENT_SIZE = 2;
-function prettyJson(x) {
-  return JSON.stringify(x, null, JSON_INDENT_SIZE);
-}
-
 // Print error and exit 1 so we can break automated builds and such.
 function die(message) {
   console.error(message);
   process.exit(1);
-}
-
-// Load file from templates/ directory.
-function loadTemplate(x) {
-  var f = path.join(__dirname, '..', 'templates', x);
-  return fs.readFileSync(f, 'utf-8');
 }
 
 // Flatten RAML's nested hierarchy of traits and resources.
@@ -92,19 +75,18 @@ function flattenResources(res, traits) {
 // example based on the declared parameters, filling in junk data.
 function makeExamplesOf(obj) {
   return _.map(obj.body, function(val, key) {
+    if (key === 'application/x-www-form-urlencoded') {
+      return {
+        type: key,
+        params: val.formParameters
+      };
+    }
     return {
       type: _.isString(key) ? key : undefined,
       example: val.example,
       schema: val.schema
     };
   });
-}
-
-function stripContentTypePrefix(type) {
-  if (!_.isString(type)) {
-    throw new Error('not a string: ' + type);
-  }
-  return type.replace(/^[^\/]*\//, '');
 }
 
 // Flattens the various methods defined on a resource, so we can have a list at
@@ -130,102 +112,12 @@ function flattenMethods(methods) {
   });
 }
 
-// Load all Handlebars helpers and partials.
-function registerHelpersAndPartials() {
-  handlebars.registerHelper('json', function(data) {
-    var out = hljs.highlight('json', prettyJson(data));
-    return new handlebars.SafeString(
-      '<pre class="hljs lang-json"><code>' +
-      out.value +
-      '</code></pre>'
-      );
-  });
-  handlebars.registerHelper('response_code', function(num) {
-    var n = Math.floor(num / 100);
-    var s = '' + num;
-    if (num in STATUS_CODES) {
-      s += ' ' + STATUS_CODES[num];
-    }
-    return new handlebars.SafeString(
-      '<span class="response-code response-code-' + n + 'xx">' +
-      handlebars.escapeExpression(s) +
-      '</span>'
-    );
-  });
-  handlebars.registerHelper('name_for_security_scheme', function(key, o) {
-    return key === null ?
-      'Security Optional' :
-      o.data.root.securitySchemes[key].type;
-  });
-  handlebars.registerHelper('show_code', function(data, o) {
-    if (data === undefined) {
-      return '';
-    }
-    var lang = o.hash.type ?
-      stripContentTypePrefix(o.hash.type) :
-      undefined;
-    var out;
-    if (lang === 'json') {
-      var err = '';
-      try {
-        data = prettyJson(JSON.parse(data));
-      } catch (e) {
-        err = JSON_PARSE_ERROR;
-      }
-      out = hljs.highlight('json', data);
-      return new handlebars.SafeString(
-        err +
-        '<pre class="hljs lang-json"><code>' +
-        out.value +
-        '</code></pre>'
-      );
-    } else if (lang === 'html' || lang === 'xml') {
-      out = hljs.highlight(lang, data);
-      return new handlebars.SafeString(
-        '<pre class="hljs lang-' + out.language +
-        '"><code>' +
-        out.value +
-        '</code></pre>'
-      );
-    } else {
-      return new handlebars.SafeString(
-        '<pre><code>' +
-        handlebars.escapeExpression(data) +
-        '</code></pre>'
-      );
-    }
-  });
-  handlebars.registerHelper('markdown', function(md) {
-    return md ? new handlebars.SafeString(marked(md)) : '';
-  });
-  handlebars.registerHelper('upper_case', _.method('toUpperCase'));
-  handlebars.registerPartial('resource', RESOURCE);
-  handlebars.registerPartial('security_scheme', SECURITY_SCHEME);
-  handlebars.registerPartial('table_of_contents', TABLE_OF_CONTENTS);
-  handlebars.registerPartial('style', STYLE);
-  handlebars.registerPartial('parameters', PARAMETERS);
-}
-
 // Grab input RAML filename.
 var args = process.argv.slice(2);
 if (args.length !== 1) {
   die('Expected one argument: input RAML file');
 }
 var input = args[0];
-
-// Load template files.
-var INDEX = loadTemplate('index.handlebars');
-var RESOURCE = loadTemplate('resource.handlebars');
-var TABLE_OF_CONTENTS = loadTemplate('table_of_contents.handlebars');
-var STYLE = loadTemplate('style.css');
-var PARAMETERS = loadTemplate('parameters.handlebars');
-var JSON_PARSE_ERROR = loadTemplate('invalid_json.html');
-var SECURITY_SCHEME = loadTemplate('security_scheme.handlebars');
-var toHtml = handlebars.compile(INDEX, {
-  preventIndent: true
-});
-
-registerHelpersAndPartials();
 
 function write(x) {
   process.stdout.write(x);

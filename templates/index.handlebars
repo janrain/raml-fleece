@@ -15,7 +15,7 @@
 </head>
 <body>
   <div id="side-navbar">
-    {{> table_of_contents}}
+    {{> tableOfContents}}
   </div>
   <main>
     <h1 class="main-heading">{{title}} Documentation</h1>
@@ -31,7 +31,7 @@
     {{#if securitySchemes}}
       <h2>Security Schemes</h2>
       {{#each securitySchemes}}
-        {{> security_scheme}}
+        {{> securityScheme}}
       {{/each}}
     {{/if}}
     <h2>Endpoints</h2>
