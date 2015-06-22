@@ -107,7 +107,7 @@ handlebars.registerHelper('showCode', function(data, o) {
 handlebars.registerHelper('markdown', function(md) {
   return md ? new handlebars.SafeString(marked(md)) : '';
 });
-handlebars.registerHelper('upper_case', _.method('toUpperCase'));
+handlebars.registerHelper('upperCase', _.method('toUpperCase'));
 
 var partials = {
   index: 'index.handlebars',
