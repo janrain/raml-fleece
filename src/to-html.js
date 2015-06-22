@@ -55,7 +55,7 @@ handlebars.registerHelper('showCodeOrForm', function(data, o) {
   var ret;
   if (data.type === 'application/x-www-form-urlencoded') {
     ret = handlebars.partials.parameters({
-      type: 'Body',
+      type: 'Form',
       params: data.params,
     });
   } else {
