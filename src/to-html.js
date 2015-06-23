@@ -48,8 +48,8 @@ handlebars.registerHelper('responseCode', function(num) {
 });
 handlebars.registerHelper('nameForSecurityScheme', function(key, o) {
   return key === null ?
-    'Security Optional' :
-    o.data.root.securitySchemes[key].type;
+    'security optional' :
+    key;
 });
 handlebars.registerHelper('showCodeOrForm', function(data, o) {
   var ret;
@@ -61,20 +61,21 @@ handlebars.registerHelper('showCodeOrForm', function(data, o) {
   } else {
     ret = handlebars.helpers.showCode(
       data.example,
-      {type: data.type}
+      {hash: {type: data.type}}
     );
   }
   return new handlebars.SafeString(ret);
 });
 handlebars.registerHelper('showCode', function(data, o) {
-  if (data === undefined) {
+  if (!data) {
     return '';
   }
   var lang = o.hash.type ?
     stripContentTypePrefix(o.hash.type) :
     undefined;
   var out;
-  if (lang === 'json') {
+  // Language might be 'json' or 'hal+json'.
+  if (/json$/.test(lang)) {
     var err = '';
     try {
       data = prettyJson(JSON.parse(data));
