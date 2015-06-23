@@ -32,7 +32,7 @@ handlebars.registerHelper('json', function(data) {
     '<pre class="hljs lang-json"><code>' +
     out.value +
     '</code></pre>'
-    );
+  );
 });
 handlebars.registerHelper('responseCode', function(num) {
   var n = Math.floor(num / 100);
