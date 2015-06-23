@@ -97,6 +97,7 @@ function flattenMethods(methods) {
     var responses = objForMethod.responses;
     obj.requestExamples = makeExamplesOf(obj);
     obj.responses = _.map(responses, function(objForCode, code) {
+      objForCode = objForCode || {};
       var obj = {};
       obj.code = code;
       obj.method = objForMethod.method;

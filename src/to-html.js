@@ -32,7 +32,7 @@ handlebars.registerHelper('json', function(data) {
     '<pre class="hljs lang-json"><code>' +
     out.value +
     '</code></pre>'
-    );
+  );
 });
 handlebars.registerHelper('responseCode', function(num) {
   var n = Math.floor(num / 100);
@@ -48,8 +48,8 @@ handlebars.registerHelper('responseCode', function(num) {
 });
 handlebars.registerHelper('nameForSecurityScheme', function(key, o) {
   return key === null ?
-    'Security Optional' :
-    o.data.root.securitySchemes[key].type;
+    'security optional' :
+    key;
 });
 handlebars.registerHelper('showCodeOrForm', function(data, o) {
   var ret;
@@ -61,20 +61,21 @@ handlebars.registerHelper('showCodeOrForm', function(data, o) {
   } else {
     ret = handlebars.helpers.showCode(
       data.example,
-      {type: data.type}
+      {hash: {type: data.type}}
     );
   }
   return new handlebars.SafeString(ret);
 });
 handlebars.registerHelper('showCode', function(data, o) {
-  if (data === undefined) {
+  if (!data) {
     return '';
   }
   var lang = o.hash.type ?
     stripContentTypePrefix(o.hash.type) :
     undefined;
   var out;
-  if (lang === 'json') {
+  // Language might be 'json' or 'hal+json'.
+  if (/json$/.test(lang)) {
     var err = '';
     try {
       data = prettyJson(JSON.parse(data));
@@ -107,7 +108,7 @@ handlebars.registerHelper('showCode', function(data, o) {
 handlebars.registerHelper('markdown', function(md) {
   return md ? new handlebars.SafeString(marked(md)) : '';
 });
-handlebars.registerHelper('upper_case', _.method('toUpperCase'));
+handlebars.registerHelper('upperCase', _.method('toUpperCase'));
 
 var partials = {
   index: 'index.handlebars',
