@@ -13,7 +13,7 @@
 .parent {
   color: #555;
 }
-.verb {
+.method .verb {
   text-transform: uppercase;
   position: absolute;
   display: block;
@@ -21,6 +21,8 @@
   top: 0;
   bottom: 0;
   width: 20px;
+  margin: 0;
+  padding: 0;
 }
 .verb:hover {
   text-decoration: none;
@@ -53,12 +55,21 @@ body {
   overflow-y: scroll;
   padding: 25px 0;
 }
-.params {
-  padding: 0 10px;
-  border-bottom: 2px solid #ddd;
+.card .params {
+  border-bottom: 2px dotted #ddd;
 }
-.params:last-child {
-  border-bottom: none;
+.card > .params:first-of-type {
+  border-bottom-style: solid;
+}
+.card > .params:last-child {
+  border: none;
+}
+.method .params {
+  padding-right: 0;
+  margin-right: 10px;
+}
+.params dl {
+  margin-bottom: 0;
 }
 .params dl dt {
   border-top: 2px dotted rgba(0, 0, 0, 0.10);
@@ -102,13 +113,16 @@ main h2 {
   margin-right: 10px;
   max-width: 900px;
 }
-.card ul.security-schemes {
-  padding-left: 0;
+.card > div {
+  padding: 0 10px;
 }
-.card ul.security-schemes li {
+.method ul.security-schemes {
+  /*padding-left: 0;*/
+}
+.method ul.security-schemes li {
   list-style-type: none;
 }
-.card ul.security-schemes li a {
+.method ul.security-schemes li a {
   display: block;
   padding: 4px 0;
 }
@@ -145,12 +159,13 @@ main h2 a:hover {
 }
 pre {
   border: 0;
+  border-radius: 0;
+  background: transparent;
   background: #2b2b2b;
   color: #b9b9b9;
-  border-radius: 0;
 }
 .method pre {
-  margin: 0 0 0 -5px;
+  margin: 0;
 }
 .navbar-inverse {
   background: #428bca;
@@ -167,10 +182,14 @@ code {
 .description {
   padding: 0 10px;
 }
-.method {
+.card .method {
   position: relative;
-  padding: 2px 0 0 25px;
+  padding: 2px 0 0 20px;
   border-bottom: 10px solid #fff;
+}
+.method > * {
+  padding-left:5px;
+  padding-right: 10px;
 }
 .method:last-child {
   border-bottom: none;
