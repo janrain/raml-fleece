@@ -24,7 +24,6 @@ function die(message) {
 
 // Flatten RAML's nested hierarchy of traits and resources.
 function flattenHierarchy(root) {
-  var title = root.title;
   var traits = arrayOfObjectsToObject(root.traits);
   var resources = flattenResources(root, root.traits);
   var securitySchemes = arrayOfObjectsToObject(root.securitySchemes);
@@ -34,6 +33,7 @@ function flattenHierarchy(root) {
     securitySchemes: securitySchemes,
     title: root.title,
     traits: traits,
+    version: root.version,
     resources: resources
   };
   return obj;
@@ -101,6 +101,7 @@ function flattenMethods(methods) {
       var obj = {};
       obj.code = code;
       obj.method = objForMethod.method;
+      obj.headers = objForCode.headers;
       obj.description = objForCode.description;
       _.forEach(objForCode.body, function(objForRespType, respType) {
         obj.type = respType;

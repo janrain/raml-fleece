@@ -22,7 +22,7 @@
   "307": "Temporary Redirect (since HTTP/1.1)",
   "308": "Permanent Redirect (RFC 7538)",
   "400": "Bad Request",
-  "401": "Unauthorized (RFC 7235)",
+  "401": "Unauthorized",
   "402": "Payment Required",
   "403": "Forbidden",
   "404": "Not Found",

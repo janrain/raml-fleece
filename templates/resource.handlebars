@@ -8,7 +8,7 @@
   <div class="description">{{markdown description}}</div>
 {{/if}}
 {{#if uriParameters}}
-  {{> parameters type="URI" params=uriParameters}}
+  {{> parameters type="URI Parameters" params=uriParameters}}
 {{/if}}
 {{#each methods}}
 <div class="method">
@@ -17,6 +17,10 @@
       id="{{upperCase method}}{{../basePath}}{{../  path}}"
       href="#{{upperCase method}}{{../basePath}}{{../  path}}"
     ><span>{{method}}</span></a>
+  {{#if description}}
+    <h4>Description</h4>
+    <p>{{markdown description}}</p>
+  {{/if}}
   {{#if securedBy}}
     <h4>Security</h4>
     <ul class="security-schemes">
@@ -30,12 +34,8 @@
     {{/each}}
     </ul>
   {{/if}}
-  {{#if description}}
-    <h4>Description</h4>
-    <p>{{markdown description}}</p>
-  {{/if}}
   {{#if queryParameters}}
-    {{> parameters type="Query" params=queryParameters}}
+    {{> parameters type="Query Parameters" params=queryParameters}}
   {{/if}}
   {{#each body}}
     {{!-- Type = @key --}}
@@ -50,30 +50,33 @@
       {{showCodeOrForm .}}
     {{/if}}
   {{/each}}
-  {{#each responses}}
-    {{#if body}}
-      <p>{{body}}</p>
-    {{/if}}
-    {{#if code}}
-      <h4>{{responseCode code}}</h4>
-    {{/if}}
-    {{#if description}}
-      {{markdown description}}
-    {{/if}}
-    {{#if schema}}
-      <h4>Response JSON Schema</h4>
-      {{showCode schema type="json"}}
-    {{/if}}
-    {{#if example}}
-      <h4>
-        Response Example
-        {{#if type}}
-          (<tt>{{type}}</tt>)
-        {{/if}}
-      </h4>
-      {{showCode example type=type}}
-    {{/if}}
-  {{/each}}
+  {{#if responses}}
+    <h4>Responses</h4>
+    {{#each responses}}
+      {{#if code}}
+        <h5>{{responseCode code}}</h5>
+      {{/if}}
+      {{#if description}}
+        {{markdown description}}
+      {{/if}}
+      {{#if headers}}
+        {{> parameters type="Headers" params=headers}}
+      {{/if}}
+      {{#if schema}}
+        <h5>Response JSON Schema</h5>
+        {{showCode schema type="json"}}
+      {{/if}}
+      {{#if example}}
+        <h5>
+          Response Example
+          {{#if type}}
+            (<tt>{{type}}</tt>)
+          {{/if}}
+        </h5>
+        {{showCode example type=type}}
+      {{/if}}
+    {{/each}}
+  {{/if}}
 </div>
 {{/each}}
 </div>

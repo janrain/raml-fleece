@@ -1,32 +1,20 @@
 <div class="card">
-<h3 id="security:{{@key}}">
-  <span class="pull-right label label-default">
-    <span class="glyphicon glyphicon-lock"></span>
-    {{type}}
-  </span>
+<h3 id="security:{{@key}}" class="anchor">
   <a href="#security:{{@key}}">
+    <span class="pull-right label label-default">
+      <span class="glyphicon glyphicon-lock"></span>
+      {{type}}
+    </span>
     {{@key}}
   </a>
 </h3>
+<div>
 {{#if description}}
-  <p>{{markdown description}}
+  <p>{{markdown description}}</p>
   {{#with describedBy}}
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Header</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each headers}}
-          <tr>
-            <td>{{@key}}</td>
-            <td>{{description}}</td>
-          </tr>
-        {{/each}}
-      </tbody>
-    </table>
+    {{#if headers}}
+      {{> parameters type="Headers" params=headers}}
+    {{/if}}
     <h4>Responses</h4>
     {{#each responses}}
       <h4>{{responseCode @key}}</h4>
@@ -37,4 +25,5 @@
     {{/each}}
   {{/with}}
 {{/if}}
+</div>
 </div>
