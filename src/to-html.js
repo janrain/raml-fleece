@@ -80,7 +80,8 @@ handlebars.registerHelper('showCode', function(data, o) {
     try {
       data = prettyJson(JSON.parse(data));
     } catch (e) {
-      err = partials.jsonParseError;
+      console.error("invalid json: " + e);
+      err = handlebars.partials.jsonParseError({});
     }
     out = hljs.highlight('json', data);
     return new handlebars.SafeString(
@@ -117,11 +118,12 @@ var partials = {
   tableOfContents: 'table_of_contents.handlebars',
   style: 'style.css',
   parameters: 'parameters.handlebars',
-  jsonParseError: 'invalid_json.html',
+  jsonParseError: 'invalid_json.handlebars',
 };
 
 _.forEach(partials, function(v, k) {
-  handlebars.registerPartial(k, loadTemplate(v));
+  var template = handlebars.template(handlebars.precompile(loadTemplate(v)));
+  handlebars.registerPartial(k, template);
 });
 
 var toHtml = handlebars.compile(loadTemplate('index.handlebars'), {
