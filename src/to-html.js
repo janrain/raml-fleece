@@ -122,7 +122,9 @@ var partials = {
 };
 
 _.forEach(partials, function(v, k) {
-  var template = handlebars.template(handlebars.precompile(loadTemplate(v)));
+  // handlebars.compile works better and more simply than the
+  // handlebars.template function recommended in the docs.
+  var template = handlebars.compile(loadTemplate(v));
   handlebars.registerPartial(k, template);
 });
 
