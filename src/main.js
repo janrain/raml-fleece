@@ -31,6 +31,7 @@ function flattenHierarchy(root) {
     baseUri: root.baseUri,
     baseUriParameters: root.baseUriParameters,
     securitySchemes: securitySchemes,
+    documentation: root.documentation,
     title: root.title,
     traits: traits,
     version: root.version,

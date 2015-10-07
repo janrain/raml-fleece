@@ -113,6 +113,7 @@ handlebars.registerHelper('upperCase', _.method('toUpperCase'));
 var partials = {
   index: 'index.handlebars',
   resource: 'resource.handlebars',
+  documentation: 'documentation.handlebars',
   securityScheme: 'security_scheme.handlebars',
   tableOfContents: 'table_of_contents.handlebars',
   style: 'style.css',

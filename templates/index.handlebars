@@ -19,6 +19,12 @@
   </div>
   <main>
     <h1 class="main-heading">{{title}}{{#if version}} {{version}}{{/if}} Documentation</h1>
+    {{#if documentation}}
+      <h2>Documentation</h2>
+      {{#each documentation}}
+        {{> documentation}}
+      {{/each}}
+    {{/if}}
     {{#if baseUri}}
       <h2>Base URI</h2>
       <div class="card api-metadata">
