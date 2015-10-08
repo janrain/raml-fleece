@@ -15,6 +15,9 @@
     {{#if headers}}
       {{> parameters type="Headers" params=headers}}
     {{/if}}
+    {{#if queryParameters}}
+      {{> parameters type="Query Parameters" params=queryParameters}}
+    {{/if}}
     <h4>Responses</h4>
     {{#each responses}}
       <h4>{{responseCode @key}}</h4>
