@@ -1,4 +1,12 @@
 <ul class="nav nav-pills nav-stacked">
+  {{#each documentation}}
+    <li class="sidebar-item">
+      <a href="#documentation-{{title}}"
+         title="{{title}}">
+        <strong>{{title}}</strong>
+      </a>
+    </li>
+  {{/each}}
   {{#each resources}}
     {{#if path}}
       <li class="sidebar-item">
