@@ -46,7 +46,7 @@
   {{/each}}
   {{#each requestExamples}}
     {{#if .}}
-      <h4>Request Example</h4>
+      <h4>Request Example{{#if type}} (<tt>{{type}}</tt>){{/if}}</h4>
       {{showCodeOrForm .}}
     {{/if}}
   {{/each}}
