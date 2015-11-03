@@ -66,14 +66,16 @@
         <h5>Response JSON Schema</h5>
         {{showCode schema type="json"}}
       {{/if}}
-      {{#if example}}
-        <h5>
-          Response Example
-          {{#if type}}
-            (<tt>{{type}}</tt>)
-          {{/if}}
-        </h5>
-        {{showCode example type=type}}
+      {{#if examples}}
+        {{#each examples}}
+          <h5>
+            Response Example
+            {{#if type}}
+              (<tt>{{type}}</tt>)
+            {{/if}}
+          </h5>
+          {{showCode example type=type}}
+        {{/each}}
       {{/if}}
     {{/each}}
   {{/if}}

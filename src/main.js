@@ -104,11 +104,7 @@ function flattenMethods(methods) {
       obj.method = objForMethod.method;
       obj.headers = objForCode.headers;
       obj.description = objForCode.description;
-      _.forEach(objForCode.body, function(objForRespType, respType) {
-        obj.type = respType;
-        obj.example = objForRespType.example;
-        obj.schema = objForRespType.schema;
-      });
+      obj.examples = makeExamplesOf(objForCode);
       return obj;
     });
     return obj;
