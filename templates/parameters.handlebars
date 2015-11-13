@@ -14,6 +14,14 @@
       {{#if description}}
         {{markdown description}}
       {{/if}}
+      {{#if enum}}
+        <b>Possible values: </b>
+        <ul>
+        {{#each enum}}
+          <li><tt>{{this}}</tt></li>
+        {{/each}}
+        </ul>
+      {{/if}}
       {{#if example}}
         <b>Example: </b>
         <code>{{example}}</code>
