@@ -1,6 +1,6 @@
 # Purpose
 
-_raml-fleece_ turns RAML into a readable HTML file.
+_raml-fleece_ turns [RAML](http://raml.org) into a readable HTML file. It currently supports version 0.8 as defined in the [0.8 RAML specification](https://github.com/raml-org/raml-spec/blob/master/raml-0.8.md)
 
 
 # Key Features
