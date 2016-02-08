@@ -90,7 +90,7 @@ handlebars.registerHelper('showCode', function(data, o) {
       out.value +
       '</code></pre>'
     );
-  } else if (lang === 'html' || lang === 'xml') {
+  } else if (lang) {
     out = hljs.highlight(lang, data);
     return new handlebars.SafeString(
       '<pre class="hljs lang-' + out.language +
@@ -99,9 +99,10 @@ handlebars.registerHelper('showCode', function(data, o) {
       '</code></pre>'
     );
   } else {
+    out = hljs.highlightAuto(data)
     return new handlebars.SafeString(
       '<pre><code>' +
-      handlebars.escapeExpression(data) +
+      out.value +
       '</code></pre>'
     );
   }
@@ -117,6 +118,15 @@ handlebars.registerHelper('markdown', function(md) {
       + body
       + '</tbody>\n'
       + '</table>\n';
+  };
+  renderer.code = function(code, lang) {
+    var out = lang ? hljs.highlight(lang, code) : hljs.highlightAuto(code)
+    var langClass = ' class="hljs lang-' + out.language + '"'
+    return new handlebars.SafeString(
+      '<pre><code' + langClass + '>' +
+      out.value +
+      '</code></pre>'
+    );
   };
   return md ? new handlebars.SafeString(marked(md, { renderer: renderer })) : '';
 });
