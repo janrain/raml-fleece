@@ -11,6 +11,18 @@ var _ = require('lodash');
 var raml = require('raml-parser');
 var pkg = require('../package');
 var toHtml = require('./to-html').toHtml;
+const argv = require('yargs')
+  .usage('Usage: $0 [input] [options]')
+  .example('$0 myDocs.raml > myDocs.html')
+  .example('$0 myDocs.raml -b > myDocs.html')
+  .demand(1, 'RAML file required')
+  .option('bare', {
+    alias: 'b',
+    description: 'Omits top level HTML elements and styles if true.',
+    default: false
+  })
+  .argv;
+const input = argv._[0]
 
 var config = {
   version: pkg.version
@@ -111,13 +123,6 @@ function flattenMethods(methods) {
   });
 }
 
-// Grab input RAML filename.
-var args = process.argv.slice(2);
-if (args.length !== 1) {
-  die('Expected one argument: input RAML file');
-}
-var input = args[0];
-
 function write(x) {
   process.stdout.write(x);
 }
@@ -137,6 +142,6 @@ raml
   .then(function(obj) {
     return _.extend(obj, {config: config});
   })
-  .then(toHtml)
+  .then(toHtml(argv.bare))
   .then(write)
   .catch(throwLater);
