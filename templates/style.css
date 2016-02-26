@@ -194,7 +194,27 @@ code {
 .method:last-child {
   border-bottom: none;
 }
-
+.text-muted {
+  color: #999385;
+}
+.text-primary {
+  color: #F05A27;
+}
+.text-secondary {
+  color: #22BBB8;
+}
+.text-success {
+  color: #346235;
+}
+.text-info {
+  color: #1A757D;
+}
+.text-warning {
+  color: #FFB82E;
+}
+.text-danger {
+  color: #CC3333;
+}
 @media only screen {
   #side-navbar {
     width: 200px;
