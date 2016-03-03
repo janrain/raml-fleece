@@ -1,0 +1,33 @@
+<div id="side-navbar">
+  {{> tableOfContents}}
+</div>
+<main>
+  <h1 class="main-heading">{{title}}{{#if version}} {{version}}{{/if}} Documentation</h1>
+  {{#if documentation}}
+    <h2>Documentation</h2>
+    {{#each documentation}}
+      {{> documentation}}
+    {{/each}}
+  {{/if}}
+  {{#if baseUri}}
+    <h2>Base URI</h2>
+    <div class="card api-metadata">
+      <h3>{{baseUri}}</h3>
+      {{#if baseUriParameters}}
+        {{> parameters type="URI Parameters" params=baseUriParameters}}
+      {{/if}}
+    </div>
+  {{/if}}
+  {{#if securitySchemes}}
+    <h2>Security Schemes</h2>
+    {{#each securitySchemes}}
+      {{> securityScheme}}
+    {{/each}}
+  {{/if}}
+  <h2>Endpoints</h2>
+  {{#each resources}}
+    {{#if path}}
+      {{> resource}}
+    {{/if}}
+  {{/each}}
+</main>

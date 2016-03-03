@@ -1,3 +1,5 @@
+'use strict';
+
 var _ = require('lodash');
 var path = require('path');
 var fs = require('fs');
@@ -134,6 +136,7 @@ handlebars.registerHelper('upperCase', _.method('toUpperCase'));
 
 var partials = {
   index: 'index.handlebars',
+  main: 'main.handlebars',
   resource: 'resource.handlebars',
   documentation: 'documentation.handlebars',
   securityScheme: 'security_scheme.handlebars',
@@ -146,13 +149,13 @@ var partials = {
 _.forEach(partials, function(v, k) {
   // handlebars.compile works better and more simply than the
   // handlebars.template function recommended in the docs.
-  var template = handlebars.compile(loadTemplate(v));
+  var template = handlebars.compile(loadTemplate(v), { preventIndent: true });
   handlebars.registerPartial(k, template);
 });
 
-var toHtml = handlebars.compile(loadTemplate('index.handlebars'), {
-  preventIndent: true
-});
+let toHtml = (bare) => {
+  return bare ? handlebars.partials.main : handlebars.partials.index
+}
 
 module.exports = {
   toHtml: toHtml
