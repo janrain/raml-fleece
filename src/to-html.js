@@ -8,18 +8,16 @@ var marked = require('marked');
 var handlebars = require('handlebars');
 
 var STATUS_CODES = require('../status-codes');
-
 var JSON_INDENT_SIZE = 2;
+const noHighlight = ['text/plain'];
+
 function prettyJson(x) {
   return JSON.stringify(x, null, JSON_INDENT_SIZE);
 }
 
-// Turns application/json into json, for example.
-function stripContentTypePrefix(type) {
-  if (!_.isString(type)) {
-    throw new Error('not a string: ' + type);
-  }
-  return type.replace(/^[^\/]*\//, '');
+function deriveContentType(mimeType) {
+  let commonTypes = ['json', 'xml', 'html'].concat(noHighlight);
+  return commonTypes.find(x => mimeType.includes(x));
 }
 
 // Load file from templates/ directory.
@@ -28,14 +26,19 @@ function loadTemplate(x) {
   return fs.readFileSync(f, 'utf-8');
 }
 
-handlebars.registerHelper('json', function(data) {
-  var out = hljs.highlight('json', prettyJson(data));
+function codeBlockMarkup(classString, content) {
   return new handlebars.SafeString(
-    '<pre class="hljs lang-json"><code>' +
-    out.value +
-    '</code></pre>'
+    `<pre><code${classString}>${content}</code></pre>`
   );
-});
+}
+
+function codeBlock(code, lang) {
+  if (noHighlight.find(x => x === lang)) return codeBlockMarkup('', code);
+  let out = lang ? hljs.highlight(lang, code) : hljs.highlightAuto(code)
+  let langClass = ` class="hljs lang-${out.language}"`
+  return codeBlockMarkup(langClass, out.value);
+}
+
 handlebars.registerHelper('responseCode', function(num) {
   var n = Math.floor(num / 100);
   var s = '' + num;
@@ -48,12 +51,12 @@ handlebars.registerHelper('responseCode', function(num) {
     '</span>'
   );
 });
-handlebars.registerHelper('nameForSecurityScheme', function(key, o) {
+handlebars.registerHelper('nameForSecurityScheme', function(key, options) {
   return key === null ?
     'security optional' :
     key;
 });
-handlebars.registerHelper('showCodeOrForm', function(data, o) {
+handlebars.registerHelper('showCodeOrForm', function(data, options) {
   var ret;
   if (data.type === 'application/x-www-form-urlencoded') {
     ret = handlebars.partials.parameters({
@@ -68,46 +71,10 @@ handlebars.registerHelper('showCodeOrForm', function(data, o) {
   }
   return new handlebars.SafeString(ret);
 });
-handlebars.registerHelper('showCode', function(data, o) {
-  if (!data) {
-    return '';
-  }
-  var lang = o.hash.type ?
-    stripContentTypePrefix(o.hash.type) :
-    undefined;
-  var out;
-  // Language might be 'json' or 'hal+json'.
-  if (/json$/.test(lang)) {
-    var err = '';
-    try {
-      data = prettyJson(JSON.parse(data));
-    } catch (e) {
-      console.error("invalid json: " + e);
-      err = handlebars.partials.jsonParseError({});
-    }
-    out = hljs.highlight('json', data);
-    return new handlebars.SafeString(
-      err +
-      '<pre class="hljs lang-json"><code>' +
-      out.value +
-      '</code></pre>'
-    );
-  } else if (lang) {
-    out = hljs.highlight(lang, data);
-    return new handlebars.SafeString(
-      '<pre class="hljs lang-' + out.language +
-      '"><code>' +
-      out.value +
-      '</code></pre>'
-    );
-  } else {
-    out = hljs.highlightAuto(data)
-    return new handlebars.SafeString(
-      '<pre><code>' +
-      out.value +
-      '</code></pre>'
-    );
-  }
+handlebars.registerHelper('showCode', function(data, options) {
+  if (!data) return '';
+  let lang = deriveContentType(options.hash.type);
+  return codeBlock(data, lang)
 });
 handlebars.registerHelper('markdown', function(md) {
   var renderer = new marked.Renderer();
@@ -121,15 +88,7 @@ handlebars.registerHelper('markdown', function(md) {
       + '</tbody>\n'
       + '</table>\n';
   };
-  renderer.code = function(code, lang) {
-    var out = lang ? hljs.highlight(lang, code) : hljs.highlightAuto(code)
-    var langClass = ' class="hljs lang-' + out.language + '"'
-    return new handlebars.SafeString(
-      '<pre><code' + langClass + '>' +
-      out.value +
-      '</code></pre>'
-    );
-  };
+  renderer.code = codeBlock
   return md ? new handlebars.SafeString(marked(md, { renderer: renderer })) : '';
 });
 handlebars.registerHelper('upperCase', _.method('toUpperCase'));
@@ -143,7 +102,6 @@ var partials = {
   tableOfContents: 'table_of_contents.handlebars',
   style: 'style.css',
   parameters: 'parameters.handlebars',
-  jsonParseError: 'invalid_json.handlebars',
 };
 
 _.forEach(partials, function(v, k) {
