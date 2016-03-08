@@ -1,7 +1,7 @@
-<div id="side-navbar">
+<div id="fleece-table-of-contents" class="fleece-table-of-contents hidden-xs">
   {{> tableOfContents}}
 </div>
-<main>
+<div id="fleece-content" class="fleece-content">
   <h1 class="main-heading">{{title}}{{#if version}} {{version}}{{/if}} Documentation</h1>
   {{#if documentation}}
     <h2>Documentation</h2>
@@ -9,25 +9,29 @@
       {{> documentation}}
     {{/each}}
   {{/if}}
-  {{#if baseUri}}
-    <h2>Base URI</h2>
-    <div class="card api-metadata">
-      <h3>{{baseUri}}</h3>
-      {{#if baseUriParameters}}
-        {{> parameters type="URI Parameters" params=baseUriParameters}}
-      {{/if}}
-    </div>
-  {{/if}}
   {{#if securitySchemes}}
-    <h2>Security Schemes</h2>
-    {{#each securitySchemes}}
-      {{> securityScheme}}
-    {{/each}}
+    <section class="security-schemes">
+      <h1 class="anchor" id="security-schemes"><a href="#security-schemes">Security Schemes</a></h1>
+      {{#each securitySchemes}}
+        {{> securityScheme}}
+      {{/each}}
+    </section>
   {{/if}}
   <h2>Endpoints</h2>
+  {{#if baseUri}}
+    <section>
+      <h1 class="anchor" id="base-uri"><a href="#base-uri">{{baseUri}}</a></h1>
+      {{#if baseUriParameters}}
+        <div class="params">
+          <h2>URI Parameters</h2>
+          {{> parameters type="URI Parameters" params=baseUriParameters}}
+        </div>
+      {{/if}}
+    </section>
+  {{/if}}
   {{#each resources}}
     {{#if path}}
       {{> resource}}
     {{/if}}
   {{/each}}
-</main>
+</div>

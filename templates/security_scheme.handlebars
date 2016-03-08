@@ -1,5 +1,5 @@
-<div class="card">
-<h3 id="security:{{@key}}" class="anchor">
+<div class="security-scheme">
+<h2 id="security:{{@key}}" class="anchor">
   <a href="#security:{{@key}}">
     <span class="pull-right label label-default">
       <span class="glyphicon glyphicon-lock"></span>
@@ -7,8 +7,8 @@
     </span>
     {{@key}}
   </a>
-</h3>
-<div>
+</h2>
+<div class="content">
 {{#if description}}
   <p>{{markdown description}}</p>
   {{#with describedBy}}
@@ -18,7 +18,7 @@
     {{#if queryParameters}}
       {{> parameters type="Query Parameters" params=queryParameters}}
     {{/if}}
-    <h4>Responses</h4>
+    <h3>Responses</h3>
     {{#each responses}}
       <h4>{{responseCode @key}}</h4>
       <p>{{type}}</p>

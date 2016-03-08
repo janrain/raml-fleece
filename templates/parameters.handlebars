@@ -1,13 +1,11 @@
-<div class="params">
-  <h4>{{type}}</h4>
+{{!-- <div class="params">
+  <h3>{{type}}</h3> --}}
   <dl>
   {{#each params}}
     <dt>
-      <tt>{{@key}}</tt>
-      <span class="pull-right">
-        {{#if type}}<span class="badge">{{type}}</span>{{/if}}
-        {{#if required}}<span class="badge">required</span>{{/if}}
-      </span>
+      <span class="param">{{@key}}</span>
+      {{#if type}}<span class="badge">{{type}}</span>{{/if}}
+      {{#if required}}<span class="badge">required</span>{{/if}}
     </dt>
     <dd>
       {{#if description}}
@@ -28,4 +26,4 @@
     </dd>
   {{/each}}
   </dl>
-</div>
+{{!-- </div> --}}

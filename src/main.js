@@ -34,6 +34,13 @@ function die(message) {
   process.exit(1);
 }
 
+function makeSafeIdString(path) {
+  return path
+    .replace(/^[\/\s\.]|[\{\}]/g, '')
+    .replace(/[\/\s\.]+/g, '-')
+    .toLowerCase();
+}
+
 // Flatten RAML's nested hierarchy of traits and resources.
 function flattenHierarchy(root) {
   var traits = arrayOfObjectsToObject(root.traits);
@@ -42,13 +49,21 @@ function flattenHierarchy(root) {
   var obj = {
     baseUri: root.baseUri,
     baseUriParameters: root.baseUriParameters,
-    securitySchemes: securitySchemes,
-    documentation: root.documentation,
+    documentation: (root.documentation || []).map(x => {
+      return {
+        title: x.title,
+        content: x.content,
+        docId: makeSafeIdString(x.title)
+      }
+    }),
     title: root.title,
     traits: traits,
     version: root.version,
     resources: resources
   };
+  if (!_.isEmpty(securitySchemes)) {
+    obj.securitySchemes = securitySchemes;
+  }
   return obj;
 }
 
@@ -74,6 +89,7 @@ function flattenResources(res, traits) {
     clean.basePath = _.pluck(parents, 'relativeUri').join('');
     clean.path = res.relativeUri;
     clean.fullPath = clean.basePath + clean.path;
+    clean.pathId = makeSafeIdString(clean.fullPath)
     xs.push(clean);
     var newParents = parents.concat([res]);
     _.forEach(res.resources, function(r) {
@@ -123,10 +139,6 @@ function flattenMethods(methods) {
   });
 }
 
-function write(x) {
-  process.stdout.write(x);
-}
-
 // Ensure that uncaught exceptions are eventually shown in the console.
 function throwLater(e) {
   setTimeout(function() { throw e; }, 0);
@@ -135,13 +147,9 @@ function throwLater(e) {
 // Load the RAML and output the HTML.
 raml
   .loadFile(input)
-  .catch(function(e) {
-    die('Error parsing: ' + e);
-  })
+  .catch(e => die('Error parsing: ' + e))
   .then(flattenHierarchy)
-  .then(function(obj) {
-    return _.extend(obj, {config: config});
-  })
+  .then(obj => _.extend(obj, {config: config}))
   .then(toHtml(argv.bare))
-  .then(write)
+  .then(x => process.stdout.write(x))
   .catch(throwLater);
