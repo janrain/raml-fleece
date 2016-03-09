@@ -29,15 +29,15 @@ function loadTemplate(x) {
 
 function codeBlockMarkup(classString, content) {
   return new handlebars.SafeString(
-    `<pre><code${classString}>${content}</code></pre>`
+    `<pre><code class="${classString}">${content}</code></pre>`
   );
 }
 
 function codeBlock(code, lang) {
-  if (noHighlight.find(x => x === lang)) return codeBlockMarkup('hljs', code);
+  if (noHighlight.find(x => x === lang)) return codeBlockMarkup('code-block', code);
   let out = lang ? hljs.highlight(lang, code) : hljs.highlightAuto(code)
-  let langClass = ` class="hljs lang-${out.language}"`
-  return codeBlockMarkup(langClass, out.value);
+  let classString = `code-block hljs lang-${out.language}`
+  return codeBlockMarkup(classString, out.value);
 }
 
 handlebars.registerHelper('responseCode', function(num) {
