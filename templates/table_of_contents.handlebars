@@ -1,18 +1,24 @@
-<ul class="nav nav-pills nav-stacked">
+<ul class="nav">
+  <li class="toc-item top-title"><a href="#">{{title}}</a></li>
   {{#each documentation}}
-    <li class="sidebar-item">
-      <a href="#documentation-{{title}}"
-         title="{{title}}">
-        <strong>{{title}}</strong>
-      </a>
+    <li class="toc-item documentation">
+      <a href="#documentation-{{docId}}" title="{{title}}">{{title}}</a>
     </li>
   {{/each}}
+  {{#if securitySchemes}}
+    <li class="toc-item security-schemes">
+      <a href="#security-schemes" title="Security Schemes">Security Schemes</a>
+    </li>
+  {{/if}}
+  {{#if baseUri}}
+    <li class="toc-item base-uri">
+      <a href="#base-uri" title="{{baseUri}}">{{baseUri}}</a>
+    </li>
+  {{/if}}
   {{#each resources}}
     {{#if path}}
-      <li class="sidebar-item">
-        <a href="#{{basePath}}{{path}}"
-           title="{{basePath}}{{path}}">
-          {{basePath}}<strong>{{path}}</strong>
+      <li class="toc-item endpoint">
+        <a href="#{{pathId}}" title="{{fullPath}}"><span class="parent">{{basePath}}</span><strong>{{path}}</strong>
         </a>
       </li>
     {{/if}}

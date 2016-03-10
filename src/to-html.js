@@ -6,6 +6,7 @@ var fs = require('fs');
 var hljs = require('highlight.js');
 var marked = require('marked');
 var handlebars = require('handlebars');
+const less = require('less');
 
 var STATUS_CODES = require('../status-codes');
 var JSON_INDENT_SIZE = 2;
@@ -28,27 +29,22 @@ function loadTemplate(x) {
 
 function codeBlockMarkup(classString, content) {
   return new handlebars.SafeString(
-    `<pre><code${classString}>${content}</code></pre>`
+    `<pre><code class="${classString}">${content}</code></pre>`
   );
 }
 
 function codeBlock(code, lang) {
-  if (noHighlight.find(x => x === lang)) return codeBlockMarkup('', code);
+  if (noHighlight.find(x => x === lang)) return codeBlockMarkup('code-block', code);
   let out = lang ? hljs.highlight(lang, code) : hljs.highlightAuto(code)
-  let langClass = ` class="hljs lang-${out.language}"`
-  return codeBlockMarkup(langClass, out.value);
+  let classString = `code-block hljs lang-${out.language}`
+  return codeBlockMarkup(classString, out.value);
 }
 
 handlebars.registerHelper('responseCode', function(num) {
-  var n = Math.floor(num / 100);
-  var s = '' + num;
-  if (num in STATUS_CODES) {
-    s += ' ' + STATUS_CODES[num];
-  }
+  let n = Math.floor(num / 100);
+  let message = `${num} ` + handlebars.escapeExpression(STATUS_CODES[num] || '')
   return new handlebars.SafeString(
-    '<span class="response-code response-code-' + n + 'xx">' +
-    handlebars.escapeExpression(s) +
-    '</span>'
+    `<span class="response-code response-code-${n}xx">${message}</span>`
   );
 });
 handlebars.registerHelper('nameForSecurityScheme', function(key, options) {
@@ -79,14 +75,10 @@ handlebars.registerHelper('showCode', function(data, options) {
 handlebars.registerHelper('markdown', function(md) {
   var renderer = new marked.Renderer();
   renderer.table = function(header, body) {
-    return '<table class="table">\n'
-      + '<thead>\n'
-      + header
-      + '</thead>\n'
-      + '<tbody>\n'
-      + body
-      + '</tbody>\n'
-      + '</table>\n';
+    return '<table class="table">'
+    + `<thead>${header}</thead>`
+    + `<tbody>${body}</tbody>`
+    + '</table>'
   };
   renderer.code = codeBlock
   return md ? new handlebars.SafeString(marked(md, { renderer: renderer })) : '';
@@ -100,7 +92,6 @@ var partials = {
   documentation: 'documentation.handlebars',
   securityScheme: 'security_scheme.handlebars',
   tableOfContents: 'table_of_contents.handlebars',
-  style: 'style.css',
   parameters: 'parameters.handlebars',
 };
 
@@ -109,6 +100,13 @@ _.forEach(partials, function(v, k) {
   // handlebars.template function recommended in the docs.
   var template = handlebars.compile(loadTemplate(v), { preventIndent: true });
   handlebars.registerPartial(k, template);
+});
+
+let lessOptions = {
+  compress: true
+};
+less.render(loadTemplate('style.less'), lessOptions, (error, output) => {
+  handlebars.registerPartial('style', output.css)
 });
 
 let toHtml = (bare) => {

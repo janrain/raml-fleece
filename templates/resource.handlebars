@@ -1,28 +1,33 @@
-<div class="card resource">
-<h3 class="anchor" id="{{basePath}}{{path}}">
-  <a href="#{{basePath}}{{path}}">
+<section class="resource">
+<h1 class="anchor" id="{{pathId}}">
+  <a href="#{{pathId}}">
     {{#if basePath}}<span class="parent">{{basePath}}</span>{{/if}}{{path}}
   </a>
-</h3>
+</h1>
 {{#if description}}
+  <h2 class="endpoint-description">Description</h2>
   <div class="description">{{markdown description}}</div>
 {{/if}}
 {{#if uriParameters}}
-  {{> parameters type="URI Parameters" params=uriParameters}}
+  <div class="params">
+    <h2>URI Parameters</h2>
+    {{> parameters params=uriParameters}}
+  </div>
 {{/if}}
 {{#each methods}}
-<div class="method">
-    <a
-      class="verb {{method}}"
-      id="{{upperCase method}}{{../basePath}}{{../  path}}"
-      href="#{{upperCase method}}{{../basePath}}{{../  path}}"
-    ><span>{{method}}</span></a>
+<div class="method {{method}}">
+  <a
+    class="verb {{method}}"
+    id="{{upperCase method}}{{../basePath}}{{../  path}}"
+    href="#{{upperCase method}}{{../basePath}}{{../  path}}"
+  ><h2>{{method}}</h2></a>
+  <div class="content">
   {{#if description}}
-    <h4>Description</h4>
+    <h3>Description</h3>
     <p>{{markdown description}}</p>
   {{/if}}
   {{#if securedBy}}
-    <h4>Security</h4>
+    <h3>Security</h3>
     <ul class="security-schemes">
     {{#each securedBy}}
     <li>
@@ -35,35 +40,44 @@
     </ul>
   {{/if}}
   {{#if headers}}
-    {{> parameters type="Request Headers" params=headers}}
+    <div class="params">
+      <h3>Request Headers</h3>
+      {{> parameters params=headers}}
+    </div>
   {{/if}}
   {{#if queryParameters}}
-    {{> parameters type="Query Parameters" params=queryParameters}}
+    <div class="params">
+      <h3>Query Parameters</h3>
+      {{> parameters params=queryParameters}}
+    </div>
   {{/if}}
   {{#each body}}
     {{!-- Type = @key --}}
     {{#if schema}}
-      <h4>Request JSON Schema</h4>
+      <h3>Request JSON Schema</h3>
       {{showCode schema type="json"}}
     {{/if}}
   {{/each}}
   {{#each requestExamples}}
     {{#if .}}
-      <h4>Request Example{{#if type}} (<tt>{{type}}</tt>){{/if}}</h4>
+      <h3>Request Example{{#if type}} (<tt>{{type}}</tt>){{/if}}</h3>
       {{showCodeOrForm .}}
     {{/if}}
   {{/each}}
   {{#if responses}}
-    <h4>Responses</h4>
+    <h3>Responses</h3>
     {{#each responses}}
       {{#if code}}
-        <h5>{{responseCode code}}</h5>
+        <h4>{{responseCode code}}</h4>
       {{/if}}
       {{#if description}}
         {{markdown description}}
       {{/if}}
       {{#if headers}}
-        {{> parameters type="Headers" params=headers}}
+        <div class="params">
+          <h4>Response Headers</h4>
+          {{> parameters params=headers}}
+        </div>
       {{/if}}
       {{#if schema}}
         <h5>Response JSON Schema</h5>
@@ -82,6 +96,7 @@
       {{/if}}
     {{/each}}
   {{/if}}
+  </div>
 </div>
 {{/each}}
-</div>
+</section>
