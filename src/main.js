@@ -21,6 +21,11 @@ const argv = require('yargs')
     description: 'Omits top level HTML elements and styles if true.',
     default: false
   })
+  .option('postmanId', {
+    alias: 'p',
+    description: 'Add Postman Collection ID',
+    default: false
+  })
   .argv;
 const input = argv._[0]
 
@@ -150,6 +155,6 @@ raml
   .catch(e => die('Error parsing: ' + e))
   .then(flattenHierarchy)
   .then(obj => _.extend(obj, {config: config}))
-  .then(toHtml(argv.bare))
+  .then(toHtml(argv.bare, argv.postmanId))
   .then(x => process.stdout.write(x))
   .catch(throwLater);

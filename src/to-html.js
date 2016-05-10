@@ -95,21 +95,32 @@ var partials = {
   parameters: 'parameters.handlebars',
 };
 
-_.forEach(partials, function(v, k) {
-  // handlebars.compile works better and more simply than the
-  // handlebars.template function recommended in the docs.
-  var template = handlebars.compile(loadTemplate(v), { preventIndent: true });
-  handlebars.registerPartial(k, template);
-});
+let toHtml = (bare, postmanId) => {
 
-let lessOptions = {
-  compress: true
-};
-less.render(loadTemplate('style.less'), lessOptions, (error, output) => {
-  handlebars.registerPartial('style', output.css)
-});
+  handlebars.registerHelper('postmanButton', function() {
+    if (postmanId) {
+      return new handlebars.SafeString(
+        `<div class="postman-run-button"
+          data-postman-action="collection/import"
+          data-postman-var-1="${postmanId}"></div>`
+      );
+    }
+  });
 
-let toHtml = (bare) => {
+  _.forEach(partials, function(v, k) {
+    // handlebars.compile works better and more simply than the
+    // handlebars.template function recommended in the docs.
+    var template = handlebars.compile(loadTemplate(v), { preventIndent: true });
+    handlebars.registerPartial(k, template);
+  });
+
+  let lessOptions = {
+    compress: true
+  };
+  less.render(loadTemplate('style.less'), lessOptions, (error, output) => {
+    handlebars.registerPartial('style', output.css)
+  });
+
   return bare ? handlebars.partials.main : handlebars.partials.index
 }
 

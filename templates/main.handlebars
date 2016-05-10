@@ -3,6 +3,7 @@
 </div>
 <div id="fleece-content" class="fleece-content">
   <h1 class="main-heading">{{title}}{{#if version}} {{version}}{{/if}} Documentation</h1>
+  {{ postmanButton }}
   {{#if documentation}}
     {{#each documentation}}
       {{> documentation}}
