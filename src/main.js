@@ -91,7 +91,7 @@ function flattenResources(res, traits) {
     var clean = _.extend({}, res);
     delete clean.resources;
     clean.methods = flattenMethods(res.methods);
-    clean.basePath = _.pluck(parents, 'relativeUri').join('');
+    clean.basePath = _.map(parents, 'relativeUri').join('');
     clean.path = res.relativeUri;
     clean.fullPath = clean.basePath + clean.path;
     clean.pathId = makeSafeIdString(clean.fullPath)
