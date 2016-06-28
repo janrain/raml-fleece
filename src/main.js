@@ -135,12 +135,37 @@ function throwLater(e) {
   setTimeout(function() { throw e; }, 0);
 }
 
+const templates = _.chain(argv)
+  .pick([
+    'template-documentation',
+    'template-index',
+    'template-before-main',
+    'template-main',
+    'template-after-main',
+    'template-parameters',
+    'template-resource',
+    'template-securityScheme',
+    'template-tableOfContents',
+  ])
+  .pickBy(_.isString)
+  .mapKeys((value, key) => _.replace(key, 'template-', ''))
+  .value()
+
+const styles = _.chain(argv)
+  .pick([
+    'style-before',
+    'style',
+    'style-after'
+  ])
+  .pickBy(_.isString)
+  .value()
+
 // Load the RAML and output the HTML.
 raml
   .loadFile(input)
   .catch(e => die('Error parsing: ' + e))
   .then(flattenHierarchy)
   .then(obj => _.extend(obj, {config: config}))
-  .then(toHtml(argv.bare, argv.postmanId))
+  .then(toHtml(argv.bare, argv.postmanId, templates, styles))
   .then(x => process.stdout.write(x))
   .catch(throwLater);
