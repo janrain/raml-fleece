@@ -11,7 +11,9 @@
 {{#if uriParameters}}
   <div class="params">
     <h2>URI Parameters</h2>
-    {{> parameters params=uriParameters}}
+    {{#> custom-parameters params=uriParameters}}
+      {{> parameters params=uriParameters}}
+    {{/ custom-parameters}}
   </div>
 {{/if}}
 {{#each methods}}
@@ -42,13 +44,17 @@
   {{#if headers}}
     <div class="params">
       <h3>Request Headers</h3>
-      {{> parameters params=headers}}
+      {{#> custom-parameters params=headers}}
+        {{> parameters params=headers}}
+      {{/ custom-parameters}}
     </div>
   {{/if}}
   {{#if queryParameters}}
     <div class="params">
       <h3>Query Parameters</h3>
-      {{> parameters params=queryParameters}}
+      {{#> custom-parameters params=queryParameters}}
+        {{> parameters params=queryParameters}}
+      {{/ custom-parameters}}
     </div>
   {{/if}}
   {{#each body}}
@@ -76,7 +82,9 @@
       {{#if headers}}
         <div class="params">
           <h4>Response Headers</h4>
-          {{> parameters params=headers}}
+          {{#> custom-parameters params=headers}}
+            {{> parameters params=headers}}
+          {{/ custom-parameters }}
         </div>
       {{/if}}
       {{#if schema}}

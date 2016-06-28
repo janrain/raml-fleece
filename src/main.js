@@ -11,22 +11,8 @@ var _ = require('lodash');
 var raml = require('raml-parser');
 var pkg = require('../package');
 var toHtml = require('./to-html').toHtml;
-const argv = require('yargs')
-  .usage('Usage: $0 [input] [options]')
-  .example('$0 myDocs.raml > myDocs.html')
-  .example('$0 myDocs.raml -b > myDocs.html')
-  .demand(1, 'RAML file required')
-  .option('bare', {
-    alias: 'b',
-    description: 'Omits top level HTML elements and styles if true.',
-    default: false
-  })
-  .option('postmanId', {
-    alias: 'p',
-    description: 'Add Postman Collection ID',
-    default: false
-  })
-  .argv;
+const argv = require('./cmdline').argv
+
 const input = argv._[0]
 
 var config = {
@@ -149,12 +135,38 @@ function throwLater(e) {
   setTimeout(function() { throw e; }, 0);
 }
 
+const templates = _.chain(argv)
+  .pick([
+    'template-documentation',
+    'template-index',
+    'template-before-main',
+    'template-main',
+    'template-after-main',
+    'template-parameters',
+    'template-resource',
+    'template-securityScheme',
+    'template-tableOfContents',
+    'template-after-tableOfContents',
+  ])
+  .pickBy(_.isString)
+  .mapKeys((value, key) => _.replace(key, 'template-', ''))
+  .value()
+
+const styles = _.chain(argv)
+  .pick([
+    'style-before',
+    'style',
+    'style-after'
+  ])
+  .pickBy(_.isString)
+  .value()
+
 // Load the RAML and output the HTML.
 raml
   .loadFile(input)
   .catch(e => die('Error parsing: ' + e))
   .then(flattenHierarchy)
   .then(obj => _.extend(obj, {config: config}))
-  .then(toHtml(argv.bare, argv.postmanId))
+  .then(toHtml(argv.bare, argv.postmanId, templates, styles))
   .then(x => process.stdout.write(x))
   .catch(throwLater);
