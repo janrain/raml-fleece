@@ -13,10 +13,14 @@
   <p>{{markdown description}}</p>
   {{#with describedBy}}
     {{#if headers}}
-      {{> parameters type="Headers" params=headers}}
+      {{#> custom-parameters type="Headers" params=headers}}
+        {{> parameters type="Headers" params=headers}}
+      {{/ custom-parameters}}
     {{/if}}
     {{#if queryParameters}}
-      {{> parameters type="Query Parameters" params=queryParameters}}
+      {{#> custom-parameters type="Query Parameters" params=queryParameters}}
+        {{> parameters type="Query Parameters" params=queryParameters}}
+      {{/ custom-parameters}}
     {{/if}}
     <h3>Responses</h3>
     {{#each responses}}
