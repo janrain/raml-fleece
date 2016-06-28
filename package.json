@@ -8,10 +8,10 @@
     "handlebars": "^4.0.5",
     "highlight.js": "^9.1.0",
     "less": "^2.6.1",
-    "lodash": "^3.9.3",
+    "lodash": "^4.13.1",
     "marked": "^0.3.3",
     "raml-parser": "^0.8.11",
-    "yargs": "^3.32.0"
+    "yargs": "^4.7.1"
   },
   "scripts": {
     "travis": "jshint src/*.js && jscs src/*.js",
