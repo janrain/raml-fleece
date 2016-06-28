@@ -24,6 +24,10 @@ function deriveContentType(mimeType) {
 // Load file from templates/ directory.
 function loadTemplate(x) {
   var f = path.join(__dirname, '..', 'templates', x);
+  return loadTemplateFromPath(f)
+}
+
+function loadTemplateFromPath(f) {
   return fs.readFileSync(f, 'utf-8');
 }
 
@@ -95,7 +99,7 @@ var partials = {
   parameters: 'parameters.handlebars',
 };
 
-let toHtml = (bare, postmanId) => {
+let toHtml = (bare, postmanId, customTemplates, customStyles) => {
 
   handlebars.registerHelper('postmanButton', function() {
     if (postmanId) {
@@ -107,6 +111,7 @@ let toHtml = (bare, postmanId) => {
     }
   });
 
+  // Load default templates/partials.
   _.forEach(partials, function(v, k) {
     // handlebars.compile works better and more simply than the
     // handlebars.template function recommended in the docs.
@@ -114,14 +119,35 @@ let toHtml = (bare, postmanId) => {
     handlebars.registerPartial(k, template);
   });
 
+  // Load custom templates/partials.
+  _.forEach(customTemplates, function(v, k) {
+    // handlebars.compile works better and more simply than the
+    // handlebars.template function recommended in the docs.
+    var template = handlebars.compile(loadTemplateFromPath(v), { preventIndent: true });
+    handlebars.registerPartial(`custom-${k}`, template);
+  })
+
   let lessOptions = {
     compress: true
   };
   less.render(loadTemplate('style.less'), lessOptions, (error, output) => {
     handlebars.registerPartial('style', output.css)
   });
+  // Load custom styles.
+  _.forEach(customStyles, function(v, k) {
+    less.render(loadTemplateFromPath(v), lessOptions, (error, output) => {
+      handlebars.registerPartial(`custom-${k}`, output.css);
+    });
+  })
 
-  return bare ? handlebars.partials.main : handlebars.partials.index
+  if (bare) {
+    return handlebars.partials.main
+  } else if (_.has(customTemplates, 'index')) {
+    return handlebars.partials['custom-index']
+  } else {
+    return handlebars.partials.index;
+  }
+
 }
 
 module.exports = {

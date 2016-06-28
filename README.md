@@ -18,6 +18,10 @@ _raml-fleece_ turns [RAML](http://raml.org) into a readable HTML file. It curren
 
     raml-fleece api.raml > index.html
 
+# Custom Templates and Scripts
+
+Custom Templates and scripts let you overwrite and extend the templates and scripts. See the command line help for details.
+
 # Thanks
 
 This tool was originally built using [raml2html](https://github.com/kevinrenskers/raml2html).
