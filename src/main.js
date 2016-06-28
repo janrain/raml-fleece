@@ -11,22 +11,8 @@ var _ = require('lodash');
 var raml = require('raml-parser');
 var pkg = require('../package');
 var toHtml = require('./to-html').toHtml;
-const argv = require('yargs')
-  .usage('Usage: $0 [input] [options]')
-  .example('$0 myDocs.raml > myDocs.html')
-  .example('$0 myDocs.raml -b > myDocs.html')
-  .demand(1, 'RAML file required')
-  .option('bare', {
-    alias: 'b',
-    description: 'Omits top level HTML elements and styles if true.',
-    default: false
-  })
-  .option('postmanId', {
-    alias: 'p',
-    description: 'Add Postman Collection ID',
-    default: false
-  })
-  .argv;
+const argv = require('./cmdline').argv
+
 const input = argv._[0]
 
 var config = {
