@@ -11,10 +11,16 @@
   <script type="text/javascript"></script>
 
   <style>
-{{> style }}
+  {{#> custom-before-style}}{{/ custom-before-style}}
+  {{#> custom-style }}
+    {{> style }}
+  {{/ custom-style }}
+  {{#> custom-after-style}}{{/ custom-after-style}}
   </style>
 </head>
 <body>
-  {{> main}}
+  {{#> custom-main}}
+    {{> main}}
+  {{/ custom-main}}
 </body>
 </html>
