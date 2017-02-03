@@ -103,8 +103,8 @@ function makeExamplesOf(obj) {
     }
     return {
       type: _.isString(key) ? key : undefined,
-      example: val ? val.example : undefined,
-      schema: val ? val.schema : undefined
+      example: val && val.example,
+      schema: val && val.schema
     };
   });
 }
