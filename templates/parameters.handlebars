@@ -17,9 +17,21 @@
       {{/each}}
       </ul>
     {{/if}}
+    {{#if minimum}}
+      <b>Minimum: </b>
+      <code>{{minimum}}</code>
+    {{/if}}
+    {{#if maximum}}
+      <b>Maximum: </b>
+      <code>{{maximum}}</code>
+    {{/if}}
     {{#if example}}
       <b>Example: </b>
       <code>{{example}}</code>
+    {{/if}}
+    {{#if default}}
+      <b>Default: </b>
+      <code>{{default}}</code>
     {{/if}}
   </dd>
 {{/each}}
