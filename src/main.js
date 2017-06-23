@@ -4,8 +4,6 @@
 // TODO: Show headers.
 // TODO: Show HTTPS.
 // TODO: Show OAuth.
-// TODO: Show query parameter enums.
-// TODO: Show query parameter default values.
 
 var _ = require('lodash');
 var raml = require('raml-parser');
