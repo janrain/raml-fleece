@@ -10,16 +10,7 @@
     "less": "^4.1.2",
     "lodash": "^4.17.21",
     "marked": "^4.0.10",
-    "raml-parser": "^0.8.18",
+    "raml-parser": "^0.8.16",
     "yargs": "^17.3.1"
-  },
-  "scripts": {
-    "travis": "jshint src/*.js && jscs src/*.js",
-    "jshint": "jshint",
-    "jscs": "jscs"
-  },
-  "devDependencies": {
-    "jscs": "^1.13.1",
-    "jshint": "^2.13.3"
   }
 }
